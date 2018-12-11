@@ -1,0 +1,136 @@
+%SOURCE
+% Stylish Curriculum Vitae
+% LaTeX Template
+% Version 1.0 (18/7/12)
+% This template has been downloaded from:  http://www.LaTeXTemplates.com
+% Original author:  Stefano (http://stefano.italians.nl/)
+% IMPORTANT: THIS TEMPLATE NEEDS TO BE COMPILED WITH XeLaTeX
+% License:  CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+
+\documentclass[a4paper, oneside, final]{scrartcl}
+
+\usepackage{scrpage2} % Provides headers and footers configuration
+\usepackage{titlesec} % Allows creating custom \section's
+\usepackage{marvosym} % Allows the use of symbols
+\usepackage{tabularx,colortbl} % Advanced table configurations
+\usepackage{fontspec} % Allows font customization
+\usepackage{hyperref} % URL support
+\usepackage{silence} %Kill verbose terminal output
+
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont{Adobe Garamond Pro}
+
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+
+\pagestyle{scrheadings} % Print the headers and footers on all pages
+
+\addtolength{\voffset}{-0.5in} % Adjust the vertical offset - less whitespace at the top of the page
+\addtolength{\textheight}{3cm} % Adjust the text height - less whitespace at the bottom of the page
+
+\newcommand{\gray}{\rowcolor[gray]{.90}} % Custom highlighting for the work and education sections
+
+
+%FOOTER
+\renewcommand{\headfont}{\normalfont\rmfamily\scshape} % Letter spacing and font size
+\cofoot{
+\addfontfeature{LetterSpace=20.0}\fontsize{12.5}{17}\selectfont
+1-530-848-8212\\
+\href{mailto:markopfell@gmail.com}{markopfell@gmail.com}\\
+\href{https://github.com/markopfell}{github.com/markopfell}\\
+\href{https://www.linkedin.com/in/markopfell/}{linkedin.com/markopfell}
+}
+
+\begin{document}
+\begin{center} % Center everything in the document
+
+\pdfpageheight 11in
+\pdfpagewidth 8.5in
+
+
+%HEADER
+{\addfontfeature{LetterSpace=20.0}\fontsize{36}{36}\selectfont\scshape Mark Opfell}
+\vspace{1.16 cm} % Extra whitespace after the large name at the top
+
+
+%SKILLS & QUALIFICATIONS
+\section{Exposure \&  Skills}
+\begin{tabular}{ @{} >{\bfseries}l @{\hspace{6ex}} l }
+Programming Languages & Python\\
+Python Packages & NumPy, SciPy, Matplotlib, Json, Requests \\
+Tools & Pycharm, Vi, Bash, Git, GitHub\, Jupyter, Docker\\
+APIs \& Standards & FCC, ITU, REST, JSON,  \\
+Databases & PostgreSQL, MongoDB \\
+Life & Financial Independence, Backcountry skiing\\
+\\
+\end{tabular}
+
+%WORK EXPERIENCE
+\section{Work Experience}
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+\gray Job Title & \textbf{Systems Engineer}\\
+\gray Employer & \textbf{Kymeta} \hfill Redmond, WA\\
+\gray Period & \textbf{February 2018 -- Present}\\
+%total compensation:$95k + 10k stock, Systems Engineer, company_size=100
+&
+\vspace{-0.15 cm}
+RF systems designer developing on a network of mobile software defined phased array antennas connecting users to the Internet over satellite.  Kymeta is a Series D startup funded by Bill Gates.
+\\
+\\
+\end{tabularx}
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+\gray Job Title & \textbf{Systems Software Engineer}\\
+\gray Employer & \textbf{Space Systems/Loral} \hfill Mountain View, CA\\
+\gray Period & \textbf{October 2016 -- January 2018}\\
+%total compensation:$82k, Senior Systems Engineer, company_size=4000
+&
+\vspace{-0.15 cm}
+Award wining role of leading, developing, and managing a production Python client and services to exchange data between a PostgreSQL database storing 17 years of antenna data and an RF downlink capacity tool.
+\\
+\\
+\end{tabularx}
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+\gray Job Title & \textbf{Senior Systems Engineer}\\
+\gray Employer & \textbf{Space Systems/Loral} \hfill Mountain View, CA\\
+\gray Period & \textbf{March 2015 -- October 2016}\\
+%total compensation:$82k, Senior Systems Engineer, company_size=4000
+&
+\vspace{-0.15 cm}
+Developed Python analysis tool to model complex amplitude and time delay of 10,000+ passive and active electronic units for a ground-based beam-forming network.
+\newline
+Awarded by the CEO for saving \$0.25 Million and 3 weeks of production schedule with Python tool simulations.
+\\
+\\
+\end{tabularx}
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+\gray Job Title & \textbf{Systems Engineer}\\
+\gray Employer & \textbf{Space Systems/Loral} \hfill Mountain View, CA\\
+\gray Period & \textbf{June 2012 -- March 2015}\\
+%total compensation:$77k, Associate Systems Engineer, company_size=3000
+%total compensation:$68k, Systems Engineer, company_size=3000
+&
+\vspace{-0.15 cm}
+Automated calculations for the world's highest capacity satellite's gateway downlinks at 32,000 Watts of transmit power.
+\newline
+Developed and maintained budgets analyzing RF channel performance over 80 unique countries during 1.5 year satellite design cycle.
+\\
+\\
+\end{tabularx}
+
+
+
+%EDUCATION
+\section{Education}
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+\gray Degree & \textbf{Bachelor of Science in Electrical Engineering}\\
+%\gray Focus & \textbf{Applied Electromagnetics}\\
+\gray University & \textbf{University of California, Davis} \\
+\gray Period & \textbf{June 2009 -- June 2012}\\
+\end{tabularx}
+
+
+\end{center}
+\end{document}
