@@ -1,5 +1,4 @@
 import os
-import glob
 import skimage
 from skimage import io
 
