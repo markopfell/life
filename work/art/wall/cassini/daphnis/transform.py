@@ -1,5 +1,6 @@
 import os
 import skimage
+from skimage import io, transform
 
 
 def get_file_names_in_(folder, undesired_format):
@@ -33,7 +34,11 @@ def modify_image_files(_image_files):
     _modified_image_files = []
     for _image_file in _image_files:
         _modified_image_files.append(
-            skimage.transform.rescale(_image_file, SCALING_FACTOR, anti_aliasing=SCALING_ANTI_ALIASING, multichannel=SCALING_MULTICHANNEL, mode=SCALING_MODE))
+            skimage.transform.rescale(_image_file,
+                                      SCALING_FACTOR,
+                                      anti_aliasing=SCALING_ANTI_ALIASING,
+                                      multichannel=SCALING_MULTICHANNEL,
+                                      mode=SCALING_MODE))
     return _modified_image_files
 
 
@@ -44,7 +49,7 @@ DATA_FOLDER_LOCATION = '/'+DATA_FOLDER
 SCALING_FACTOR = 4
 SCALING_ANTI_ALIASING = False  # TODO is this default =-) or =-(
 SCALING_MULTICHANNEL = False  # TODO is this default =-) or =-(
-SCALING_MODE = 'constant' # TODO is this default =-) or =-(
+SCALING_MODE = 'constant'  # TODO is this default =-) or =-(
 
 cwd = os.path.dirname(os.path.realpath(__file__))
 data_folder = os.path.join(cwd, DATA_FOLDER)
