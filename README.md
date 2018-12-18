@@ -1,1 +1,1 @@
-Hello World!
+Fortune favors the bold
