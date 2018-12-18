@@ -22,7 +22,7 @@ elif r.status_code == 200 and is_remote:
     is_post = True
 
 elif not is_remote:
-    post_file = open(file_name, mode='r')
+    post_file = open(file_name).read()
     post = post_file.read()
     post_file.close()
     is_post = True
@@ -36,13 +36,16 @@ if is_post:
 
     cleaned_post_key_words = []
 
+    sorted(set())
+
     for line in cleaned_post:
         line.strip()
 
     line = list(set(cleaned_post))
 
-    for line in cleaned_post:
-        print(line)
+    # for line in cleaned_post:
+    #     print(line)
 
-text4.dispersion_plot(["citizens", "democracy", "freedom", "duties", "America"])
+# text4.dispersion_plot(["citizens", "democracy", "freedom", "duties", "America"])
+print(sorted(set(text3)))
 
