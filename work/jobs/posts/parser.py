@@ -1,5 +1,10 @@
-'# TODO get remote working?
+import nltk
+import numpy
+import matplotlib
+# TODO get remote working?
 import requests
+
+from nltk.book import *
 
 job_url = 'https://g.co/kgs/1QVgZR'
 r = requests.get(job_url)
@@ -38,4 +43,6 @@ if is_post:
 
     for line in cleaned_post:
         print(line)
+
+text4.dispersion_plot(["citizens", "democracy", "freedom", "duties", "America"])
 
