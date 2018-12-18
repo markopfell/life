@@ -1,11 +1,9 @@
+# TODO use these librarys and get remote working?
 import nltk
 import numpy
 import matplotlib
 # TODO get remote working?
 import requests
-
-from nltk.book import *
-
 job_url = 'https://g.co/kgs/1QVgZR'
 r = requests.get(job_url)
 
@@ -22,30 +20,20 @@ elif r.status_code == 200 and is_remote:
     is_post = True
 
 elif not is_remote:
-    post_file = open(file_name).read()
-    post = post_file.read()
-    post_file.close()
+    post = open(file_name).read()
     is_post = True
 
 if is_post:
     post = post.split('\n')
-    cleaned_post = []
+    vocabulary = []
+    for sentence in post:
+        phrases = sentence.split(' ')
+        for phrase in phrases:
+            vocabulary.append(phrase.lower())
 
-    for line in post:
-        cleaned_post.append(line.strip())
+    unique_vocabulary = sorted(list(set(vocabulary)))
 
-    cleaned_post_key_words = []
+    for token in unique_vocabulary:
+        print(token)
 
-    sorted(set())
-
-    for line in cleaned_post:
-        line.strip()
-
-    line = list(set(cleaned_post))
-
-    # for line in cleaned_post:
-    #     print(line)
-
-# text4.dispersion_plot(["citizens", "democracy", "freedom", "duties", "America"])
-print(sorted(set(text3)))
 
