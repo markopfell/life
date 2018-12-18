@@ -1,0 +1,46 @@
+RF Engineer
+SAVED
+
+spacex
+Redmond, WA
+Apply on WayUp
+Apply on LaddersApply on Livecareer Jobs
+Over 1 month agoFull-time
+SpaceX was founded under the belief that a future where humanity is out exploring the stars is fundamentally more exciting than one where we are not. Today SpaceX is actively developing the technologies to make this possible, with the ultimate goal of enabling human life on Mars.
+
+RF ENGINEER
+
+This position is a critical part of the team responsible for ensuring communication with a complex satellite network utilizing a global ground station network. You will ensure that the ground network provides the best possible radio link performance while also ensuring compliance with our operating licenses.
+
+RESPONSIBILITIES:
+• Lead the design, analysis, and implementation RF components supporting satellite ground stations
+• Develop link budgets and cascades for analyzing performance expectations based on fielded/implemented designs. Investigate discrepancies between expected and actual link performance through the analysis of operations data.
+• Investigate and propose design changes to improve system performance while reducing deployment and/or operations cost.
+• Assist in preparing technical material in support of spectrum licensing and regulatory compliance
+• Understand and maintain regulatory requirements for satellite systems on a country basis.
+
+BASIC QUALIFICATIONS:
+• Bachelor of Science degree in electrical engineering.
+• 5+ years of work experience.
+• Previous experience characterizing radio performance in Ku-Band and Ka-Band.
+• Previous experience using RF related test equipment such as spectrum analyzers, vector signal analyzers, vector signal generator, network analyzers.
+
+PREFERRED SKILLS AND EXPERIENCE:
+• Masters of Science degree in electrical engineering with emphasis in RF or Radio Communication.
+• Understanding of RF passive components such as hybrid couplers, Wilkinson dividers, waveguide, circulators, and directional couplers.
+• Knowledge of digital communication systems, spread spectrum, single and multi-carrier techniques and modulation types such as QPSK, APSK and QAM.
+• Understanding communication theory with emphasis on modulation, bit error rate and noise figure.
+• Experience performing analysis and simulation of both linear and non-linear circuits such as phase-locked loops, vector modulators/demodulators, oscillators, mixers, multipliers, synthesizers, low noise and/or power amplifiers.
+• Have specified and developed full communications systems in cellular or satellite systems.
+• Python and/or Labview programming experience for test automation.
+• Experience in Matlab, Python, C++ or equivalent tools for modeling and analyzing RF systems.
+
+ADDITIONAL REQUIREMENTS:
+• Must be available to work extended hours and/or weekends as needed.
+
+ITAR REQUIREMENTS:
+• To conform to U.S. Government space technology export regulations, applicant must be a U.S. citizen, lawful permanent resident of the U.S., protected individual as defined by 8 U.S.C. 1324b(a)(3), or eligible to obtain the required authorizations from the U.S. Department of State. Learn more about ITAR here.
+
+SpaceX is an Equal Opportunity Employer; employment with SpaceX is governed on the basis of merit, competence and qualifications and will not be influenced in any manner by race, color, religion, gender, national origin/ethnicity, veteran status, disability status, age, sexual orientation, gender identity, marital status, mental or physical disability or any other legally protected status.
+
+Applicants wishing to view a copy of SpaceX’s Affirmative Action Plan for veterans and individuals with disabilities, or applicants requiring reasonable accommodation to the application/interview process should notify the Human Resources Department at (310) 363-6000
