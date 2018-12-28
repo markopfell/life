@@ -31,7 +31,7 @@ if is_post:
         for phrase in phrases:
             vocabulary.append(phrase.lower())
 
-    unique_vocabulary = sorted(list(set(vocabulary)))
+    unique_vocabulary = sorted(set(vocabulary))
 
     for token in unique_vocabulary:
         print(token)
