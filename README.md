@@ -1,1 +1,3 @@
-Fortune favors the bold
+Fortune favors the brave.
+
+<!-- Pliny The Younger -->
