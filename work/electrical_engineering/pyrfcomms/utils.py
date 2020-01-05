@@ -1,4 +1,5 @@
 import math
+from scipy import constants
 
 
 def eirp(power_transmit, loss, gain_transmit):  # dBW, dB, dBi
@@ -21,8 +22,9 @@ def path_loss_ionosphere():
     return
 
 
-def path_loss_free_space():
-    return
+def path_loss_free_space(distance, frequency):
+    _path_loss_free_space = 20 * math.log10(( 4 * math.pi * distance * frequency )  / constants.value(u'speed of light in vacuum'))
+    return _path_loss_free_space
 
 
 def slant_range(mean_orbit_altitude, elevation_angle_degrees, object_radius):
@@ -32,5 +34,6 @@ def slant_range(mean_orbit_altitude, elevation_angle_degrees, object_radius):
     return _slant_range
 
 
-EARTH_RADIUS = 6378*1000    
-print(slant_range(35786*1000, 90, EARTH_RADIUS))
+EARTH_RADIUS = 6378*1000
+print(slant_range(500*1000, 10, EARTH_RADIUS))
+print(path_loss_free_space(slant_range(500*1000, 10, EARTH_RADIUS), 8125000000))
