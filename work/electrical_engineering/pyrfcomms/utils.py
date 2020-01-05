@@ -5,7 +5,7 @@ from scipy import special
 
 
 def eirp(power_transmit, loss, gain_transmit):  # dBW, dB, dBi
-    return power_transmit + loss + gain_transmit
+    return power_transmit - loss + gain_transmit
 
 
 def g_over_t(gain_receive, noise_temperature):  # dB, dBK
@@ -64,7 +64,7 @@ def path_loss_ionosphere():
 def path_loss_free_space(distance, frequency):
     _path_loss_free_space = 20 * math.log10((4 * math.pi * distance * frequency) /
                                             scipy.constants.value(u'speed of light in vacuum'))
-    return _path_loss_free_space
+    return -1*_path_loss_free_space
 
 
 def slant_range(mean_orbit_altitude, elevation_angle_degrees, object_radius):
@@ -77,6 +77,32 @@ def slant_range(mean_orbit_altitude, elevation_angle_degrees, object_radius):
 
 
 EARTH_RADIUS = 6378*1000
-print(slant_range(500*1000, 10, EARTH_RADIUS))
-print(path_loss_free_space(slant_range(500*1000, 10, EARTH_RADIUS), 8125000000))
-print(ebn0(1.77E-11, 'OQPSK'))
+
+_modulated_bit_rate = 200E6
+_altitude = 500*1000
+_elevation_angle = 10
+_frequency = 8125000000
+_implementation_margin = 1
+_coding_gain = 13
+_slant_range = slant_range(_altitude, _elevation_angle, EARTH_RADIUS)
+_path_loss_free_space = path_loss_free_space(_slant_range, _frequency)
+_minimum_ebn0 = ebn0(1.77E-11, 'OQPSK')
+_boltzmann = -10*math.log10(scipy.constants.value(u'Boltzmann constant'))
+_eirp = eirp(16.2, 2, 9)
+_g_over_t = 19.7
+_path_loss_ionosphere = path_loss_ionosphere()
+_path_loss_troposphere = path_loss_troposphere()
+_c_over_N0 = _eirp + _g_over_t + _path_loss_free_space + _path_loss_ionosphere + _path_loss_troposphere + _boltzmann
+_ebn0 = _c_over_N0 - 10*math.log10(_modulated_bit_rate)
+_link_margin = _ebn0 - _implementation_margin - _minimum_ebn0 + _coding_gain
+
+print(_slant_range)
+print(_path_loss_free_space)
+print(_minimum_ebn0)
+print(_eirp)
+print(_g_over_t)
+print(_path_loss_free_space)
+print(_boltzmann)
+print(_c_over_N0)
+print(_ebn0)
+print(_link_margin)
