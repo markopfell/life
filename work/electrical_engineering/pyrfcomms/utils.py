@@ -86,16 +86,19 @@ center_frequency = 8000E6
 implementation_margin = 1
 mission_bit_error_rate = 2E-11
 coding_gain = 14
-groundstation_g_over_t = 20
+ground_station_g_over_t = 20
 
 satellite_slant_range = slant_range(altitude, elevation_angle, EARTH_RADIUS)
 minimum_ebn0 = ebn0(mission_bit_error_rate, 'OQPSK')
 space_craft_eirp = eirp(20, 2, 10)
 
-c_over_N0 = space_craft_eirp + groundstation_g_over_t + path_loss_free_space(satellite_slant_range, center_frequency) + \
-             path_loss_troposphere() + \
-             path_loss_troposphere() + \
-             BOLTZMANN
+c_over_N0 = space_craft_eirp + \
+            ground_station_g_over_t + \
+            path_loss_free_space(satellite_slant_range, center_frequency) + \
+            path_loss_troposphere() + \
+            path_loss_troposphere() + \
+            BOLTZMANN
+
 ebn0 = c_over_N0 - 10*math.log10(modulated_bit_rate)
 link_margin = ebn0 - implementation_margin - minimum_ebn0 + coding_gain
 
