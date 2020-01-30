@@ -77,32 +77,28 @@ def slant_range(mean_orbit_altitude, elevation_angle_degrees, object_radius):
 
 
 EARTH_RADIUS = 6378*1000
+BOLTZMANN = -10*math.log10(scipy.constants.value(u'Boltzmann constant'))
 
-_modulated_bit_rate = 200E6
-_altitude = 500*1000
-_elevation_angle = 10
-_frequency = 8125000000
-_implementation_margin = 1
-_coding_gain = 13
-_slant_range = slant_range(_altitude, _elevation_angle, EARTH_RADIUS)
-_path_loss_free_space = path_loss_free_space(_slant_range, _frequency)
-_minimum_ebn0 = ebn0(1.77E-11, 'OQPSK')
-_boltzmann = -10*math.log10(scipy.constants.value(u'Boltzmann constant'))
-_eirp = eirp(16.2, 2, 9)
-_g_over_t = 19.7
-_path_loss_ionosphere = path_loss_ionosphere()
-_path_loss_troposphere = path_loss_troposphere()
-_c_over_N0 = _eirp + _g_over_t + _path_loss_free_space + _path_loss_ionosphere + _path_loss_troposphere + _boltzmann
-_ebn0 = _c_over_N0 - 10*math.log10(_modulated_bit_rate)
-_link_margin = _ebn0 - _implementation_margin - _minimum_ebn0 + _coding_gain
+modulated_bit_rate = 100E6
+altitude = 1000E3
+elevation_angle = 10
+center_frequency = 8000E6
+implementation_margin = 1
+mission_bit_error_rate = 2E-11
+coding_gain = 14
+groundstation_g_over_t = 20
 
-print(_slant_range)
-print(_path_loss_free_space)
-print(_minimum_ebn0)
-print(_eirp)
-print(_g_over_t)
-print(_path_loss_free_space)
-print(_boltzmann)
-print(_c_over_N0)
-print(_ebn0)
-print(_link_margin)
+satellite_slant_range = slant_range(altitude, elevation_angle, EARTH_RADIUS)
+minimum_ebn0 = ebn0(mission_bit_error_rate, 'OQPSK')
+space_craft_eirp = eirp(20, 2, 10)
+
+c_over_N0 = space_craft_eirp + groundstation_g_over_t + path_loss_free_space(satellite_slant_range, center_frequency) + \
+             path_loss_troposphere() + \
+             path_loss_troposphere() + \
+             BOLTZMANN
+ebn0 = c_over_N0 - 10*math.log10(modulated_bit_rate)
+link_margin = ebn0 - implementation_margin - minimum_ebn0 + coding_gain
+
+print(c_over_N0)
+print(ebn0)
+print(link_margin)
