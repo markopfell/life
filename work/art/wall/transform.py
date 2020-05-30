@@ -48,7 +48,7 @@ EMPTY_STRING = ''
 DATA_FOLDER_LOCATION = '/'+DATA_FOLDER
 SCALING_FACTOR = 2
 SCALING_ANTI_ALIASING = False  # True for downsampling
-SCALING_MULTICHANNEL = False  # TODO is this default =-) or =-(
+SCALING_MULTICHANNEL = True  # True for color images only
 SCALING_MODE = 'constant'  # TODO is this default =-) or =-(
 
 cwd = os.path.dirname(os.path.realpath(__file__))
