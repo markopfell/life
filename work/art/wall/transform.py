@@ -46,8 +46,8 @@ UNDESIRED_FILE_FORMAT = '.DS_Store'
 DATA_FOLDER = 'raw'
 EMPTY_STRING = ''
 DATA_FOLDER_LOCATION = '/'+DATA_FOLDER
-SCALING_FACTOR = 4
-SCALING_ANTI_ALIASING = False  # TODO is this default =-) or =-(
+SCALING_FACTOR = 2
+SCALING_ANTI_ALIASING = False  # True for downsampling
 SCALING_MULTICHANNEL = False  # TODO is this default =-) or =-(
 SCALING_MODE = 'constant'  # TODO is this default =-) or =-(
 
