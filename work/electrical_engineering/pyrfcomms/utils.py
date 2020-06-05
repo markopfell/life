@@ -1,7 +1,9 @@
 import math
 import scipy
+import numpy
 from scipy import constants
 from scipy import special
+import matplotlib.pyplot as plt
 
 
 def eirp(power_transmit, loss, gain_transmit):  # dBW, dB, dBi
@@ -79,29 +81,47 @@ def slant_range(mean_orbit_altitude, elevation_angle_degrees, object_radius):
 EARTH_RADIUS = 6378*1000
 BOLTZMANN = -10*math.log10(scipy.constants.value(u'Boltzmann constant'))
 
+link = 'X-band Downlink'
 modulated_bit_rate = 100E6
-altitude = 1000E3
+modulation_type = 'OQPSK'
+altitude = 600E3
 elevation_angle = 10
-center_frequency = 8000E6
+center_frequency = 8025E6
 implementation_margin = 1
-mission_bit_error_rate = 2E-11
-coding_gain = 14
+mission_bit_error_rate = 1E-12
+coding_gain = 14 # rate 1/2
 ground_station_g_over_t = 20
+spacecraft_transmit_power = 10  # dBW
+spacecraft_transmit_losses = 2
+spacecraft_transmit_antenna_gain = 10
+spec = 6  # NASA SDR standard unproven link (dB)
 
-satellite_slant_range = slant_range(altitude, elevation_angle, EARTH_RADIUS)
-minimum_ebn0 = ebn0(mission_bit_error_rate, 'OQPSK')
-space_craft_eirp = eirp(20, 2, 10)
+altitudes = [300E3, 400E3, 500E3, 600E3, 700E3, 1200E3]
+specs = [spec]*len(altitudes)
 
-c_over_N0 = space_craft_eirp + \
-            ground_station_g_over_t + \
-            path_loss_free_space(satellite_slant_range, center_frequency) + \
-            path_loss_troposphere() + \
-            path_loss_troposphere() + \
-            BOLTZMANN
+link_margins = []
 
-ebn0 = c_over_N0 - 10*math.log10(modulated_bit_rate)
-link_margin = ebn0 - implementation_margin - minimum_ebn0 + coding_gain
+for altitude in altitudes:
 
-print(c_over_N0)
-print(ebn0)
-print(link_margin)
+    satellite_slant_range = slant_range(altitude, elevation_angle, EARTH_RADIUS)
+
+    minimum_ebn0 = ebn0(mission_bit_error_rate, modulation_type)
+    spacecraft_eirp = eirp(spacecraft_transmit_power, spacecraft_transmit_losses, spacecraft_transmit_antenna_gain)
+
+    c_over_N0 = \
+        spacecraft_eirp + \
+        ground_station_g_over_t + \
+        path_loss_free_space(satellite_slant_range, center_frequency) + \
+        path_loss_troposphere() + \
+        path_loss_troposphere() + \
+        BOLTZMANN
+
+    actual_ebn0 = c_over_N0 - 10*math.log10(modulated_bit_rate)
+    link_margins.append(actual_ebn0 - implementation_margin - minimum_ebn0 + coding_gain)
+
+plt.plot(numpy.array(altitudes, dtype='float')/1E3, link_margins)
+plt.plot(numpy.array(altitudes, dtype='float')/1E3, specs, color='red')
+plt.title(link)
+plt.xlabel('Altitude (km)')
+plt.ylabel('Link Margin (dB)')
+plt.show()
