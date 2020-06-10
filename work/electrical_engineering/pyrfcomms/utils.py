@@ -81,7 +81,11 @@ def slant_range(mean_orbit_altitude, elevation_angle_degrees, object_radius):
 EARTH_RADIUS = 6378*1000
 BOLTZMANN = -10*math.log10(scipy.constants.value(u'Boltzmann constant'))
 
-link = 'X-band Downlink'
+
+frequency_name = 'X-band Downlink'
+mission_name = 'AnyMission™'
+link_name = frequency_name + ': ' + mission_name
+
 modulated_bit_rate = 100E6
 modulation_type = 'OQPSK'
 altitude = 600E3
@@ -94,10 +98,14 @@ ground_station_g_over_t = 20
 spacecraft_transmit_power = 10  # dBW
 spacecraft_transmit_losses = 2
 spacecraft_transmit_antenna_gain = 10
-spec = 6  # NASA SDR standard unproven link (dB)
+sdr_spec = 6  # NASA SDR standard unproven link (dB)
+cdr_spec = 3  # NASA CDR standard unprovel link (dB)
+min_spec = 0  # 100% likely bit drops here (dB)
 
-altitudes = [300E3, 400E3, 500E3, 600E3, 700E3, 1200E3]
-specs = [spec]*len(altitudes)
+altitudes = numpy.linspace(300E3, 3000E3, num=50)
+sdr_specs = [sdr_spec]*len(altitudes)
+cdr_specs = [cdr_spec]*len(altitudes)
+min_specs = [min_spec]*len(altitudes)
 
 link_margins = []
 
@@ -120,8 +128,10 @@ for altitude in altitudes:
     link_margins.append(actual_ebn0 - implementation_margin - minimum_ebn0 + coding_gain)
 
 plt.plot(numpy.array(altitudes, dtype='float')/1E3, link_margins)
-plt.plot(numpy.array(altitudes, dtype='float')/1E3, specs, color='red')
-plt.title(link)
+plt.plot(numpy.array(altitudes, dtype='float')/1E3, sdr_specs, color='green')
+plt.plot(numpy.array(altitudes, dtype='float')/1E3, cdr_specs, color='orange')
+plt.plot(numpy.array(altitudes, dtype='float')/1E3, min_specs, color='red')
+plt.title(link_name)
 plt.xlabel('Altitude (km)')
 plt.ylabel('Link Margin (dB)')
 plt.show()
