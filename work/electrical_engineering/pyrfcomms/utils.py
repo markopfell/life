@@ -77,6 +77,37 @@ def slant_range(mean_orbit_altitude, elevation_angle_degrees, object_radius):
                                     math.sin(elevation_angle_radians))
     return _slant_range
 
+def parameterizer(key, values):
+
+    for value in values:
+        satellite_slant_range = slant_range(altitude, elevation_angle, EARTH_RADIUS)
+
+        minimum_ebn0 = ebn0(mission_bit_error_rate, modulation_type)
+        spacecraft_eirp = eirp(spacecraft_transmit_power,
+                               spacecraft_transmit_losses,
+                               spacecraft_transmit_antenna_gains[0][0])  # TODO N-D handling
+
+        c_over_N0 = \
+            spacecraft_eirp + \
+            ground_station_g_over_t + \
+            path_loss_free_space(satellite_slant_range, center_frequency) + \
+            path_loss_troposphere() + \
+            path_loss_troposphere() + \
+            BOLTZMANN
+
+        actual_ebn0 = c_over_N0 - 10 * math.log10(modulated_bit_rate)
+        link_margins.append(actual_ebn0 - implementation_margin - minimum_ebn0 + coding_gain)
+
+    plt.plot(numpy.array(altitudes, dtype='float') / 1E3, link_margins)
+    plt.plot(numpy.array(altitudes, dtype='float') / 1E3, sdr_specs, color='green')
+    plt.plot(numpy.array(altitudes, dtype='float') / 1E3, cdr_specs, color='orange')
+    plt.plot(numpy.array(altitudes, dtype='float') / 1E3, min_specs, color='red')
+    plt.title(link_name)
+    plt.xlabel(key)
+    plt.ylabel('Link Margin (dB)')
+    plt.show()
+
+    return
 
 EARTH_RADIUS = 6378*1000
 BOLTZMANN = -10*math.log10(scipy.constants.value(u'Boltzmann constant'))
@@ -97,9 +128,9 @@ coding_gain = 14 # rate 1/2
 ground_station_g_over_t = 20
 spacecraft_transmit_power = 10  # dBW
 spacecraft_transmit_losses = 2
-spacecraft_transmit_antenna_gain = 10
+spacecraft_transmit_antenna_gains = [[10, 10], [6, 30]] #gains vs 3 dB coverage angle +/-
 sdr_spec = 6  # NASA SDR standard unproven link (dB)
-cdr_spec = 3  # NASA CDR standard unprovel link (dB)
+cdr_spec = 3  # NASA CDR standard unproven link (dB)
 min_spec = 0  # 100% likely bit drops here (dB)
 
 altitudes = numpy.linspace(300E3, 3000E3, num=50)
@@ -109,12 +140,19 @@ min_specs = [min_spec]*len(altitudes)
 
 link_margins = []
 
+swept_parameter = altitudes
+swept_parameter_xlabel = 'Altitude (km)'
+
+#parameterizer(swept_parameter, swept_parameter_xlabel)
+
 for altitude in altitudes:
 
     satellite_slant_range = slant_range(altitude, elevation_angle, EARTH_RADIUS)
 
     minimum_ebn0 = ebn0(mission_bit_error_rate, modulation_type)
-    spacecraft_eirp = eirp(spacecraft_transmit_power, spacecraft_transmit_losses, spacecraft_transmit_antenna_gain)
+    spacecraft_eirp = eirp(spacecraft_transmit_power,
+                           spacecraft_transmit_losses,
+                           spacecraft_transmit_antenna_gains[0][0]) # TODO N-D handling
 
     c_over_N0 = \
         spacecraft_eirp + \
@@ -135,3 +173,4 @@ plt.title(link_name)
 plt.xlabel('Altitude (km)')
 plt.ylabel('Link Margin (dB)')
 plt.show()
+
