@@ -90,7 +90,7 @@ def parameterizer(key, values):
         minimum_ebn0 = ebn0(mission_bit_error_rate, modulation_type)
         spacecraft_eirp = eirp(spacecraft_transmit_power,
                                spacecraft_transmit_losses,
-                               spacecraft_transmit_antenna_gains[0][0])  # TODO N-D handling
+                               spacecraft_transmit_antenna_gains[:, 0])
 
         c_over_n0 = \
             spacecraft_eirp + \
@@ -137,7 +137,8 @@ coding_gain = 14  # rate 1/2
 ground_station_g_over_t = 20
 spacecraft_transmit_power = 10  # dBW
 spacecraft_transmit_losses = 2
-spacecraft_transmit_antenna_gains = [[10, 10], [6, 30]]  # gains vs 3 dB coverage angle +/-
+# [gains, 3 dB coverage angle +/- = half power beamwidth]
+spacecraft_transmit_antenna_gains = numpy.array([[10, 10], [6, 30]])
 
 altitudes = numpy.linspace(300E3, 3000E3, num=50)
 sdr_specs = [sdr_spec]*len(altitudes)
