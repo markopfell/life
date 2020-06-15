@@ -77,10 +77,15 @@ def slant_range(mean_orbit_altitude, elevation_angle_degrees, object_radius):
                                     math.sin(elevation_angle_radians))
     return _slant_range
 
+
 def parameterizer(key, values):
 
+    link_margins = []
+
+    #TODO Arbitrary parameter value handling
     for value in values:
-        satellite_slant_range = slant_range(altitude, elevation_angle, EARTH_RADIUS)
+
+        satellite_slant_range = slant_range(value, elevation_angle, EARTH_RADIUS)
 
         minimum_ebn0 = ebn0(mission_bit_error_rate, modulation_type)
         spacecraft_eirp = eirp(spacecraft_transmit_power,
@@ -112,11 +117,9 @@ def parameterizer(key, values):
 EARTH_RADIUS = 6378*1000
 BOLTZMANN = -10*math.log10(scipy.constants.value(u'Boltzmann constant'))
 
-
 frequency_name = 'X-band Downlink'
 mission_name = 'AnyMission™'
 link_name = frequency_name + ': ' + mission_name
-
 modulated_bit_rate = 100E6
 modulation_type = 'OQPSK'
 altitude = 600E3
@@ -129,6 +132,7 @@ ground_station_g_over_t = 20
 spacecraft_transmit_power = 10  # dBW
 spacecraft_transmit_losses = 2
 spacecraft_transmit_antenna_gains = [[10, 10], [6, 30]] #gains vs 3 dB coverage angle +/-
+
 sdr_spec = 6  # NASA SDR standard unproven link (dB)
 cdr_spec = 3  # NASA CDR standard unproven link (dB)
 min_spec = 0  # 100% likely bit drops here (dB)
@@ -138,39 +142,6 @@ sdr_specs = [sdr_spec]*len(altitudes)
 cdr_specs = [cdr_spec]*len(altitudes)
 min_specs = [min_spec]*len(altitudes)
 
-link_margins = []
-
 swept_parameter = altitudes
 swept_parameter_xlabel = 'Altitude (km)'
-
-#parameterizer(swept_parameter, swept_parameter_xlabel)
-
-for altitude in altitudes:
-
-    satellite_slant_range = slant_range(altitude, elevation_angle, EARTH_RADIUS)
-
-    minimum_ebn0 = ebn0(mission_bit_error_rate, modulation_type)
-    spacecraft_eirp = eirp(spacecraft_transmit_power,
-                           spacecraft_transmit_losses,
-                           spacecraft_transmit_antenna_gains[0][0]) # TODO N-D handling
-
-    c_over_N0 = \
-        spacecraft_eirp + \
-        ground_station_g_over_t + \
-        path_loss_free_space(satellite_slant_range, center_frequency) + \
-        path_loss_troposphere() + \
-        path_loss_troposphere() + \
-        BOLTZMANN
-
-    actual_ebn0 = c_over_N0 - 10*math.log10(modulated_bit_rate)
-    link_margins.append(actual_ebn0 - implementation_margin - minimum_ebn0 + coding_gain)
-
-plt.plot(numpy.array(altitudes, dtype='float')/1E3, link_margins)
-plt.plot(numpy.array(altitudes, dtype='float')/1E3, sdr_specs, color='green')
-plt.plot(numpy.array(altitudes, dtype='float')/1E3, cdr_specs, color='orange')
-plt.plot(numpy.array(altitudes, dtype='float')/1E3, min_specs, color='red')
-plt.title(link_name)
-plt.xlabel('Altitude (km)')
-plt.ylabel('Link Margin (dB)')
-plt.show()
-
+parameterizer(swept_parameter_xlabel, swept_parameter)
