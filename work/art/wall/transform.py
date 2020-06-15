@@ -46,7 +46,7 @@ UNDESIRED_FILE_FORMAT = '.DS_Store'
 DATA_FOLDER = 'raw'
 EMPTY_STRING = ''
 DATA_FOLDER_LOCATION = '/'+DATA_FOLDER
-SCALING_FACTOR = 2
+SCALING_FACTOR = 2.25
 SCALING_ANTI_ALIASING = False  # True for downsampling
 SCALING_MULTICHANNEL = True  # True for color images only
 SCALING_MODE = 'constant'  # TODO is this default =-) or =-(
