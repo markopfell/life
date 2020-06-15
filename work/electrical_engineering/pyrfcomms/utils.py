@@ -82,7 +82,7 @@ def parameterizer(key, values):
 
     link_margins = []
 
-    #TODO Arbitrary parameter value handling
+    # TODO Arbitrary parameter value handling
     for value in values:
 
         satellite_slant_range = slant_range(value, elevation_angle, EARTH_RADIUS)
@@ -114,8 +114,14 @@ def parameterizer(key, values):
 
     return
 
+
 EARTH_RADIUS = 6378*1000
 BOLTZMANN = -10*math.log10(scipy.constants.value(u'Boltzmann constant'))
+
+# ARC-STD-8070.1 : https://www.nasa.gov/sites/default/files/atoms/files/std8070.1.pdf
+sdr_spec = 6  # dB
+cdr_spec = 3  # dB
+min_spec = 0  # 100% likely bit drops here (dB)
 
 frequency_name = 'X-band Downlink'
 mission_name = 'AnyMission™'
@@ -131,11 +137,7 @@ coding_gain = 14 # rate 1/2
 ground_station_g_over_t = 20
 spacecraft_transmit_power = 10  # dBW
 spacecraft_transmit_losses = 2
-spacecraft_transmit_antenna_gains = [[10, 10], [6, 30]] #gains vs 3 dB coverage angle +/-
-
-sdr_spec = 6  # NASA SDR standard unproven link (dB)
-cdr_spec = 3  # NASA CDR standard unproven link (dB)
-min_spec = 0  # 100% likely bit drops here (dB)
+spacecraft_transmit_antenna_gains = [[10, 10], [6, 30]] # gains vs 3 dB coverage angle +/-
 
 altitudes = numpy.linspace(300E3, 3000E3, num=50)
 sdr_specs = [sdr_spec]*len(altitudes)
