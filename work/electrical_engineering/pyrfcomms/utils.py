@@ -31,7 +31,7 @@ def ebn0(bit_error_rate, modulation):
                                 (math.log2(8) * math.sin(math.pi / 8)))
     elif modulation == '16QAM' or modulation == '16APSK':
         _ebn0 = 10 * math.log10(((scipy.special.erfcinv(bit_error_rate * (8 / 3))) ** 2) * (10 / 4))
-        # TODO:  16APSK = Guess
+        # TODO:  16 APSK = Guess
     elif modulation == '16APSK' or modulation == '16PSK':
         _ebn0 = 10 * math.log10(((scipy.special.erfcinv(bit_error_rate * math.log2(16))) ** 2) /
                                 (math.log2(16) * math.sin(math.pi / 16)))
@@ -92,7 +92,7 @@ def parameterizer(key, values):
                                spacecraft_transmit_losses,
                                spacecraft_transmit_antenna_gains[0][0])  # TODO N-D handling
 
-        c_over_N0 = \
+        c_over_n0 = \
             spacecraft_eirp + \
             ground_station_g_over_t + \
             path_loss_free_space(satellite_slant_range, center_frequency) + \
@@ -100,7 +100,7 @@ def parameterizer(key, values):
             path_loss_troposphere() + \
             BOLTZMANN
 
-        actual_ebn0 = c_over_N0 - 10 * math.log10(modulated_bit_rate)
+        actual_ebn0 = c_over_n0 - 10 * math.log10(modulated_bit_rate)
         link_margins.append(actual_ebn0 - implementation_margin - minimum_ebn0 + coding_gain)
 
     plt.plot(numpy.array(altitudes, dtype='float') / 1E3, link_margins)
@@ -133,11 +133,11 @@ elevation_angle = 10
 center_frequency = 8025E6
 implementation_margin = 1
 mission_bit_error_rate = 1E-12
-coding_gain = 14 # rate 1/2
+coding_gain = 14  # rate 1/2
 ground_station_g_over_t = 20
 spacecraft_transmit_power = 10  # dBW
 spacecraft_transmit_losses = 2
-spacecraft_transmit_antenna_gains = [[10, 10], [6, 30]] # gains vs 3 dB coverage angle +/-
+spacecraft_transmit_antenna_gains = [[10, 10], [6, 30]]  # gains vs 3 dB coverage angle +/-
 
 altitudes = numpy.linspace(300E3, 3000E3, num=50)
 sdr_specs = [sdr_spec]*len(altitudes)
