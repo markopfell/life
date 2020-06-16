@@ -55,14 +55,17 @@ def ebn0(bit_error_rate, modulation):
     return _ebn0
 
 
-def path_loss_troposphere():
-    return 0
+# TODO refine estimate
+def path_loss_troposphere(distance, frequency):
+    return [0]*len(distance)
 
 
-def path_loss_ionosphere():
-    return 0
+# TODO refine estimate
+def path_loss_ionosphere(distance, frequency):
+    return [0]*len(distance)
 
 
+# TODO vectorize?
 def path_loss_free_space(distance, frequency):
     _path_loss_free_space = 20 * math.log10((4 * math.pi * distance * frequency) /
                                             scipy.constants.value(u'speed of light in vacuum'))
@@ -147,4 +150,33 @@ min_specs = [min_spec]*len(altitudes)
 
 swept_parameter = altitudes
 swept_parameter_xlabel = 'Altitude (km)'
-parameterizer(swept_parameter_xlabel, swept_parameter)
+# parameterizer(swept_parameter_xlabel, swept_parameter)
+
+link_margins = []
+
+satellite_slant_range = slant_range(altitudes, elevation_angle, EARTH_RADIUS)
+
+minimum_ebn0 = ebn0(mission_bit_error_rate, modulation_type)
+spacecraft_eirp = eirp(spacecraft_transmit_power,
+                       spacecraft_transmit_losses,
+                       spacecraft_transmit_antenna_gains[:, 0])
+
+c_over_n0 = \
+    spacecraft_eirp + \
+    ground_station_g_over_t + \
+    path_loss_free_space(satellite_slant_range, center_frequency) + \
+    path_loss_troposphere(satellite_slant_range, center_frequency) + \
+    path_loss_ionosphere(satellite_slant_range, center_frequency) + \
+    BOLTZMANN
+
+actual_ebn0 = c_over_n0 - 10 * math.log10(modulated_bit_rate)
+link_margins.append(actual_ebn0 - implementation_margin - minimum_ebn0 + coding_gain)
+
+plt.plot(numpy.array(altitudes, dtype='float') / 1E3, link_margins)
+plt.plot(numpy.array(altitudes, dtype='float') / 1E3, sdr_specs, color='green')
+plt.plot(numpy.array(altitudes, dtype='float') / 1E3, cdr_specs, color='orange')
+plt.plot(numpy.array(altitudes, dtype='float') / 1E3, min_specs, color='red')
+plt.title(link_name)
+plt.xlabel(swept_parameter_xlabel)
+plt.ylabel('Link Margin (dB)')
+plt.show()
