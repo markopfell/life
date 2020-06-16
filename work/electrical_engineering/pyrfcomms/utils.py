@@ -57,18 +57,18 @@ def ebn0(bit_error_rate, modulation):
 
 # TODO refine estimate
 def path_loss_troposphere(distance, frequency):
-    return [0]*len(distance)
+    return 0
 
 
 # TODO refine estimate
 def path_loss_ionosphere(distance, frequency):
-    return [0]*len(distance)
+    return 0
 
 
 # TODO vectorize?
 def path_loss_free_space(distance, frequency):
-    _path_loss_free_space = 20 * math.log10((4 * math.pi * distance * frequency) /
-                                            scipy.constants.value(u'speed of light in vacuum'))
+    _path_loss_free_space = 20 * numpy.log10((4 * math.pi * distance * frequency) /
+                                             scipy.constants.value(u'speed of light in vacuum'))
     return -1*_path_loss_free_space
 
 
