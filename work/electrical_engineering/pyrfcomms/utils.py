@@ -132,6 +132,8 @@ def parameterizer(key, values):
 EARTH_RADIUS = 6378*1000
 BOLTZMANN = -10*math.log10(scipy.constants.value(u'Boltzmann constant'))
 
+PLOT_POINTS = 100
+
 # ARC-STD-8070.1 : https://www.nasa.gov/sites/default/files/atoms/files/std8070.1.pdf
 sdr_spec = 6  # dB
 cdr_spec = 3  # dB
@@ -151,13 +153,26 @@ coding_gain = 14  # rate 1/2
 ground_station_g_over_t = 20
 spacecraft_transmit_power = 10  # dBW
 spacecraft_transmit_losses = 2
-# [gains, 3 dB coverage angle +/- = half power beamwidth]
-spacecraft_transmit_antenna_pattern = numpy.array([10])
-spacecraft_transmit_antenna_pattern = numpy.append(spacecraft_transmit_antenna_pattern, numpy.array(list(zip(antenna_gain(numpy.linspace(11, 90, num=2)),numpy.linspace(11, 90, num=2)))))
-spacecraft_transmit_antenna_beamwidths = 0
-spacecraft_transmit_antenna_gains = 0
-altitudes = numpy.linspace(300E3, 1200E3, num=50)
 
+spacecraft_transmit_antenna_primary_beamwidths = numpy.array([10])
+spacecraft_transmit_antenna_primary_gains = numpy.array([10])
+
+spacecraft_transmit_antenna_secondary_beamwidths = numpy.linspace(10, 100, num=PLOT_POINTS)
+spacecraft_transmit_antenna_secondary_gains = antenna_gain(spacecraft_transmit_antenna_secondary_beamwidths)
+
+spacecraft_transmit_antenna_beamwidths = numpy.append(spacecraft_transmit_antenna_primary_beamwidths,
+                                                      spacecraft_transmit_antenna_secondary_beamwidths)
+spacecraft_transmit_antenna_gains = numpy.append(spacecraft_transmit_antenna_primary_gains,
+                                                 spacecraft_transmit_antenna_secondary_gains)
+
+# Assuming that the primary antenna gain is the greatest and most accurate, i.e. measured value,
+# normalize the modeled antenna gains to it
+if spacecraft_transmit_antenna_gains[1] > spacecraft_transmit_antenna_gains[0]:
+    correction = spacecraft_transmit_antenna_gains[1] - spacecraft_transmit_antenna_gains[0]
+    spacecraft_transmit_antenna_gains[1:] =  spacecraft_transmit_antenna_gains[1:] - correction
+
+
+altitudes = numpy.linspace(300E3, 1200E3, num=PLOT_POINTS)
 swept_parameter_xlabel = 'Altitude (km)'
 swept_parameter_xlabel = 'Beamwidth (+/- Degrees'
 
@@ -166,14 +181,12 @@ swept_parameter_xlabel = 'Beamwidth (+/- Degrees'
 
 # TODO move this to a function
 if swept_parameter_xlabel == 'Altitude (km)':
-    spacecraft_transmit_antenna_gains = 10 #TODO fix this hack
+    spacecraft_transmit_antenna_gains = spacecraft_transmit_antenna_primary_gains
     sdr_specs = [sdr_spec] * len(altitudes)
     cdr_specs = [cdr_spec] * len(altitudes)
     min_specs = [min_spec] * len(altitudes)
 elif swept_parameter_xlabel == 'Beamwidth (+/- Degrees':
     altitudes = 500E3
-    spacecraft_transmit_antenna_gains = spacecraft_transmit_antenna_pattern[:, 0]  # Shape = 2 gains vs 50 for altitudes
-    spacecraft_transmit_antenna_beamwidths = spacecraft_transmit_antenna_pattern[:, 1]
     sdr_specs = [sdr_spec] * len(spacecraft_transmit_antenna_gains)
     cdr_specs = [cdr_spec] * len(spacecraft_transmit_antenna_gains)
     min_specs = [min_spec] * len(spacecraft_transmit_antenna_gains)
@@ -194,6 +207,7 @@ c_over_n0 = \
 
 actual_ebn0 = c_over_n0 - 10 * math.log10(modulated_bit_rate)
 link_margins = actual_ebn0 - implementation_margin - minimum_ebn0 + coding_gain
+
 
 # TODO move this to a function
 if swept_parameter_xlabel == 'Altitude (km)':
