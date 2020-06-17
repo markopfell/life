@@ -1,4 +1,3 @@
-import math
 import scipy
 import numpy
 from scipy import constants
@@ -11,7 +10,7 @@ def eirp(power_transmit, loss, gain_transmit):  # dBW, dB, dBi
 
 
 def g_over_t(gain_receive, noise_temperature):  # dB, dBK
-    return gain_receive - 10*math.log10(noise_temperature)
+    return gain_receive - 10*numpy.log10(noise_temperature)
 
 
 def ebn0(bit_error_rate, modulation):
@@ -23,34 +22,34 @@ def ebn0(bit_error_rate, modulation):
     _ebn0 = 0
 
     if modulation == 'GMSK':
-        _ebn0 = 10 * math.log10(((scipy.special.erfcinv(bit_error_rate * 2)) ** 2) / 0.9)
+        _ebn0 = 10 * numpy.log10(((scipy.special.erfcinv(bit_error_rate * 2)) ** 2) / 0.9)
     elif modulation == 'BPSK' or modulation == 'QPSK' or modulation == 'OQPSK' or modulation == 'PCM':
-        _ebn0 = 10 * math.log10((scipy.special.erfcinv(bit_error_rate * 2)) ** 2)
+        _ebn0 = 10 * numpy.log10((scipy.special.erfcinv(bit_error_rate * 2)) ** 2)
     elif modulation == '8PSK' or modulation == '8APSK':
-        _ebn0 = 10 * math.log10(((scipy.special.erfcinv(bit_error_rate * math.log2(8))) ** 2) /
-                                (math.log2(8) * math.sin(math.pi / 8)))
+        _ebn0 = 10 * numpy.log10(((scipy.special.erfcinv(bit_error_rate * numpy.log2(8))) ** 2) /
+                                (numpy.log2(8) * numpy.sin(numpy.pi / 8)))
     elif modulation == '16QAM' or modulation == '16APSK':
-        _ebn0 = 10 * math.log10(((scipy.special.erfcinv(bit_error_rate * (8 / 3))) ** 2) * (10 / 4))
+        _ebn0 = 10 * numpy.log10(((scipy.special.erfcinv(bit_error_rate * (8 / 3))) ** 2) * (10 / 4))
         # TODO:  16 APSK = Guess
     elif modulation == '16APSK' or modulation == '16PSK':
-        _ebn0 = 10 * math.log10(((scipy.special.erfcinv(bit_error_rate * math.log2(16))) ** 2) /
-                                (math.log2(16) * math.sin(math.pi / 16)))
+        _ebn0 = 10 * numpy.log10(((scipy.special.erfcinv(bit_error_rate * numpy.log2(16))) ** 2) /
+                                (numpy.log2(16) * numpy.sin(numpy.pi / 16)))
         # TODO:  32APSK = Guess
     elif modulation == '32APSK':
-        _ebn0 = 10 * math.log10(((scipy.special.erfcinv(bit_error_rate * math.log2(32))) ** 2) /
-                                (math.log2(32) * math.sin(math.pi / 32)))
+        _ebn0 = 10 * numpy.log10(((scipy.special.erfcinv(bit_error_rate * numpy.log2(32))) ** 2) /
+                                (numpy.log2(32) * numpy.sin(numpy.pi / 32)))
         # TODO:  64APSK = Guess
     elif modulation == '64APSK':
-        _ebn0 = 10 * math.log10(((scipy.special.erfcinv(bit_error_rate * math.log2(64))) ** 2) /
-                                (math.log2(64) * math.sin(math.pi / 64)))
+        _ebn0 = 10 * numpy.log10(((scipy.special.erfcinv(bit_error_rate * numpy.log2(64))) ** 2) /
+                                (numpy.log2(64) * numpy.sin(numpy.pi / 64)))
         # TODO:  128APSK = Guess
     elif modulation == '128APSK':
-        _ebn0 = 10 * math.log10(((scipy.special.erfcinv(bit_error_rate * math.log2(128))) ** 2) /
-                                (math.log2(128) * math.sin(math.pi / 128)))
+        _ebn0 = 10 * numpy.log10(((scipy.special.erfcinv(bit_error_rate * numpy.log2(128))) ** 2) /
+                                (numpy.log2(128) * numpy.sin(numpy.pi / 128)))
         # TODO:  256APSK = Guess
     elif modulation == '256APSK':
-        _ebn0 = 10 * math.log10(((scipy.special.erfcinv(bit_error_rate * math.log2(256))) ** 2) /
-                                (math.log2(256) * math.sin(math.pi / 256)))
+        _ebn0 = 10 * numpy.log10(((scipy.special.erfcinv(bit_error_rate * numpy.log2(256))) ** 2) /
+                                (numpy.log2(256) * numpy.sin(numpy.pi / 256)))
 
     return _ebn0
 
@@ -66,17 +65,17 @@ def path_loss_ionosphere(distance, frequency):
 
 
 def path_loss_free_space(distance, frequency):
-    _path_loss_free_space = 20 * numpy.log10((4 * math.pi * distance * frequency) /
+    _path_loss_free_space = 20 * numpy.log10((4 * numpy.pi * distance * frequency) /
                                              scipy.constants.value(u'speed of light in vacuum'))
     return -1*_path_loss_free_space
 
 
 def slant_range(mean_orbit_altitude, elevation_angle_degrees, object_radius):
     mean_orbit_radius = mean_orbit_altitude + object_radius
-    elevation_angle_radians = math.radians(elevation_angle_degrees)
+    elevation_angle_radians = numpy.radians(elevation_angle_degrees)
     _slant_range = object_radius * ((((mean_orbit_radius ** 2 / object_radius ** 2) -
-                                      (math.cos(elevation_angle_radians)) ** 2) ** 0.5) -
-                                    math.sin(elevation_angle_radians))
+                                      (numpy.cos(elevation_angle_radians)) ** 2) ** 0.5) -
+                                    numpy.sin(elevation_angle_radians))
     return _slant_range
 
 
@@ -114,7 +113,7 @@ def parameterizer(key, values):
             path_loss_troposphere() + \
             BOLTZMANN
 
-        actual_ebn0 = c_over_n0 - 10 * math.log10(modulated_bit_rate)
+        actual_ebn0 = c_over_n0 - 10 * numpy.log10(modulated_bit_rate)
         link_margins.append(actual_ebn0 - implementation_margin - minimum_ebn0 + coding_gain)
 
     plt.plot(numpy.array(altitudes, dtype='float') / 1E3, link_margins)
@@ -130,7 +129,7 @@ def parameterizer(key, values):
 
 
 EARTH_RADIUS = 6378*1000
-BOLTZMANN = -10*math.log10(scipy.constants.value(u'Boltzmann constant'))
+BOLTZMANN = -10*numpy.log10(scipy.constants.value(u'Boltzmann constant'))
 
 PLOT_POINTS = 100
 
@@ -173,8 +172,8 @@ if spacecraft_transmit_antenna_gains[1] > spacecraft_transmit_antenna_gains[0]:
 
 
 altitudes = numpy.linspace(300E3, 1200E3, num=PLOT_POINTS)
-swept_parameter_xlabel = 'Altitude (km)'
 swept_parameter_xlabel = 'Beamwidth (+/- Degrees'
+swept_parameter_xlabel = 'Altitude (km)'
 
 # parameterizer(swept_parameter_xlabel, swept_parameter)
 
@@ -205,7 +204,7 @@ c_over_n0 = \
     path_loss_ionosphere(satellite_slant_range, center_frequency) + \
     BOLTZMANN
 
-actual_ebn0 = c_over_n0 - 10 * math.log10(modulated_bit_rate)
+actual_ebn0 = c_over_n0 - 10 * numpy.log10(modulated_bit_rate)
 link_margins = actual_ebn0 - implementation_margin - minimum_ebn0 + coding_gain
 
 
