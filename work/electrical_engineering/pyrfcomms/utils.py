@@ -153,10 +153,10 @@ ground_station_g_over_t = 20
 spacecraft_transmit_power = 10  # dBW
 spacecraft_transmit_losses = 2
 
-spacecraft_transmit_antenna_primary_beamwidths = numpy.array([10])
-spacecraft_transmit_antenna_primary_gains = numpy.array([10])
+spacecraft_transmit_antenna_primary_beamwidths = numpy.array([0, 10])
+spacecraft_transmit_antenna_primary_gains = numpy.array([16, 13])
 
-spacecraft_transmit_antenna_secondary_beamwidths = numpy.linspace(10, 100, num=PLOT_POINTS)
+spacecraft_transmit_antenna_secondary_beamwidths = numpy.linspace(10, 180, num=PLOT_POINTS)
 spacecraft_transmit_antenna_secondary_gains = antenna_gain(spacecraft_transmit_antenna_secondary_beamwidths)
 
 spacecraft_transmit_antenna_beamwidths = numpy.append(spacecraft_transmit_antenna_primary_beamwidths,
@@ -165,15 +165,17 @@ spacecraft_transmit_antenna_gains = numpy.append(spacecraft_transmit_antenna_pri
                                                  spacecraft_transmit_antenna_secondary_gains)
 
 # Assuming that the primary antenna gain is the greatest and most accurate, i.e. measured value,
-# normalize the modeled antenna gains to it
-if spacecraft_transmit_antenna_gains[1] > spacecraft_transmit_antenna_gains[0]:
-    correction = spacecraft_transmit_antenna_gains[1] - spacecraft_transmit_antenna_gains[0]
-    spacecraft_transmit_antenna_gains[1:] =  spacecraft_transmit_antenna_gains[1:] - correction
+# normalize the secondary modeled antenna gains to it
+secondary_gain_start = len(spacecraft_transmit_antenna_primary_gains)
+
+if spacecraft_transmit_antenna_gains[secondary_gain_start] > spacecraft_transmit_antenna_gains[secondary_gain_start-1]:
+    correction = spacecraft_transmit_antenna_gains[secondary_gain_start] - spacecraft_transmit_antenna_gains[secondary_gain_start-1]
+    spacecraft_transmit_antenna_gains[secondary_gain_start:] = spacecraft_transmit_antenna_gains[secondary_gain_start:] - correction
 
 
 altitudes = numpy.linspace(300E3, 1200E3, num=PLOT_POINTS)
 swept_parameter_xlabel = 'Beamwidth (+/- Degrees'
-swept_parameter_xlabel = 'Altitude (km)'
+# swept_parameter_xlabel = 'Altitude (km)'
 
 # parameterizer(swept_parameter_xlabel, swept_parameter)
 
