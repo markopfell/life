@@ -90,7 +90,6 @@ def antenna_gain(beamwidths):
     return 10 * numpy.log10(_antenna_gains*antenna_efficiency)
 
 
-
 def parameterizer(key, values):
 
     link_margins = []
@@ -153,8 +152,9 @@ ground_station_g_over_t = 20
 spacecraft_transmit_power = 10  # dBW
 spacecraft_transmit_losses = 2
 
-spacecraft_transmit_antenna_primary_beamwidths = numpy.array([0, 10])
-spacecraft_transmit_antenna_primary_gains = numpy.array([16, 13])
+# Build symmetrical antenna gain vs beamwidth
+spacecraft_transmit_antenna_primary_beamwidths = numpy.array([-10, 0, 10])
+spacecraft_transmit_antenna_primary_gains = numpy.array([13, 16, 13])
 
 spacecraft_transmit_antenna_secondary_beamwidths = numpy.linspace(10, 180, num=PLOT_POINTS)
 spacecraft_transmit_antenna_secondary_gains = antenna_gain(spacecraft_transmit_antenna_secondary_beamwidths)
@@ -164,8 +164,9 @@ spacecraft_transmit_antenna_beamwidths = numpy.append(spacecraft_transmit_antenn
 spacecraft_transmit_antenna_gains = numpy.append(spacecraft_transmit_antenna_primary_gains,
                                                  spacecraft_transmit_antenna_secondary_gains)
 
-# Assuming that the primary antenna gain is the greatest and most accurate, i.e. measured value,
-# normalize the secondary modeled antenna gains to it
+# # Assuming that the primary antenna gain is the greatest and most accurate, i.e. measured value,
+# # normalize the secondary modeled antenna gains to it
+
 secondary_gain_start = len(spacecraft_transmit_antenna_primary_gains)
 
 if spacecraft_transmit_antenna_gains[secondary_gain_start] > spacecraft_transmit_antenna_gains[secondary_gain_start-1]:
@@ -174,7 +175,9 @@ if spacecraft_transmit_antenna_gains[secondary_gain_start] > spacecraft_transmit
 
 
 altitudes = numpy.linspace(300E3, 1200E3, num=PLOT_POINTS)
-swept_parameter_xlabel = 'Beamwidth (+/- Degrees'
+swept_parameter_ylabel = 'Link Margin (dB)'
+# swept_parameter_ylabel = 'Combined Antenna Gain (dB)'
+swept_parameter_xlabel = 'Beamwidth (Absolute Degrees)'
 # swept_parameter_xlabel = 'Altitude (km)'
 
 # parameterizer(swept_parameter_xlabel, swept_parameter)
@@ -186,7 +189,7 @@ if swept_parameter_xlabel == 'Altitude (km)':
     sdr_specs = [sdr_spec] * len(altitudes)
     cdr_specs = [cdr_spec] * len(altitudes)
     min_specs = [min_spec] * len(altitudes)
-elif swept_parameter_xlabel == 'Beamwidth (+/- Degrees':
+elif swept_parameter_xlabel == 'Beamwidth (Absolute Degrees)':
     altitudes = 500E3
     sdr_specs = [sdr_spec] * len(spacecraft_transmit_antenna_gains)
     cdr_specs = [cdr_spec] * len(spacecraft_transmit_antenna_gains)
@@ -211,7 +214,8 @@ link_margins = actual_ebn0 - implementation_margin - minimum_ebn0 + coding_gain
 
 
 # TODO move this to a function
-if swept_parameter_xlabel == 'Altitude (km)':
+
+if swept_parameter_xlabel == 'Altitude (km)' and swept_parameter_ylabel == 'Link Margin (dB)':
     plt.plot(numpy.array(altitudes, dtype='float') / 1E3, link_margins)
     plt.plot(numpy.array(altitudes, dtype='float') / 1E3, sdr_specs, color='green')
     plt.plot(numpy.array(altitudes, dtype='float') / 1E3, cdr_specs, color='orange')
@@ -221,13 +225,19 @@ if swept_parameter_xlabel == 'Altitude (km)':
     plt.ylabel('Link Margin (dB)')
     plt.show()
 
-elif swept_parameter_xlabel == 'Beamwidth (+/- Degrees':
+elif swept_parameter_xlabel == 'Beamwidth (Absolute Degrees)' and swept_parameter_ylabel == 'Link Margin (dB)':
     plt.plot(numpy.array(spacecraft_transmit_antenna_beamwidths, dtype='float'), link_margins)
     plt.plot(numpy.array(spacecraft_transmit_antenna_beamwidths, dtype='float'), sdr_specs, color='green')
     plt.plot(numpy.array(spacecraft_transmit_antenna_beamwidths, dtype='float'), cdr_specs, color='orange')
     plt.plot(numpy.array(spacecraft_transmit_antenna_beamwidths, dtype='float'), min_specs, color='red')
     plt.title(link_name)
-    plt.xlabel('Beamwidth')
+    plt.xlabel('Beamwidth (Absolute Degrees)')
     plt.ylabel('Link Margin (dB)')
     plt.show()
 
+elif swept_parameter_xlabel == 'Beamwidth (Absolute Degrees)' and swept_parameter_ylabel == 'Combined Antenna Gain (dB)':
+    plt.plot(numpy.array(spacecraft_transmit_antenna_beamwidths, dtype='float'), spacecraft_transmit_antenna_gains)
+    plt.title(link_name)
+    plt.xlabel('Beamwidth (Absolute Degrees)')
+    plt.ylabel('Combined Antenna Gain (dB)')
+    plt.show()
