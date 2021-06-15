@@ -10,11 +10,13 @@ def esn0_to_ebn0(esn0, spectral_efficiency):
 
 
 def coding_gain(rate, standard):
+    _coding_gain = 0
     if standard == 'ccsds':
         if rate == 1/2:
             _coding_gain = 14
 
     elif standard == 'dvbs2':
+        # Final draft ETSI EN 302 307 V1.2.1 (2009-04)
         pass
     return _coding_gain
 
@@ -262,7 +264,8 @@ def output():
         plt.show()
     return
 
-#output()
+# output()
+
 
 
 print(coding_gain(1/2, 'ccsds'))
