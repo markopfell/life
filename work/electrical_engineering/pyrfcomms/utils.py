@@ -5,6 +5,16 @@ from scipy import special
 import matplotlib.pyplot as plt
 
 
+def coding_gain(rate, standard):
+    if standard == 'ccsds':
+        if rate == 1/2:
+            _coding_gain = 14
+
+    elif standard == 'dvbs2':
+        pass
+    return _coding_gain
+
+
 def eirp(power_transmit, loss, gain_transmit):  # dBW, dB, dBi
     return power_transmit - loss + gain_transmit
 
@@ -127,117 +137,128 @@ def parameterizer(key, values):
     return
 
 
-EARTH_RADIUS = 6378*1000
-BOLTZMANN = -10*numpy.log10(scipy.constants.value(u'Boltzmann constant'))
+def output():
 
-PLOT_POINTS = 100
+    EARTH_RADIUS = 6378 * 1000
+    BOLTZMANN = -10 * numpy.log10(scipy.constants.value(u'Boltzmann constant'))
 
-# ARC-STD-8070.1 : https://www.nasa.gov/sites/default/files/atoms/files/std8070.1.pdf
-sdr_spec = 6  # dB
-cdr_spec = 3  # dB
-min_spec = 0  # 100% likely bit drops here (dB)
+    PLOT_POINTS = 100
 
-frequency_name = 'X-band Downlink'
-mission_name = 'AnyMission™'
-link_name = frequency_name + ': ' + mission_name
-modulated_bit_rate = 100E6
-modulation_type = 'QPSK'
-altitude = 600E3
-elevation_angle = 10
-center_frequency = 8025E6
-implementation_margin = 1
-mission_bit_error_rate = 1E-12
-coding_gain = 14  # rate 1/2
-ground_station_g_over_t = 20
-spacecraft_transmit_power = 10  # dBW
-spacecraft_transmit_losses = 2
+    # ARC-STD-8070.1 : https://www.nasa.gov/sites/default/files/atoms/files/std8070.1.pdf
+    sdr_spec = 6  # dB
+    cdr_spec = 3  # dB
+    min_spec = 0  # 100% likely bit drops here (dB)
 
-# Build symmetrical antenna gain vs beamwidth
-spacecraft_transmit_antenna_primary_beamwidths = numpy.array([-10, 0, 10])
-spacecraft_transmit_antenna_primary_gains = numpy.array([13, 16, 13])
+    frequency_name = 'X-band Downlink'
+    mission_name = 'AnyMission™'
+    link_name = frequency_name + ': ' + mission_name
+    modulated_bit_rate = 100E6
+    modulation_type = 'QPSK'
+    altitude = 600E3
+    elevation_angle = 10
+    center_frequency = 8025E6
+    implementation_margin = 1
+    mission_bit_error_rate = 1E-12
+    rate = 1/2
+    coding_standard = 'ccsds_convolutional'
+    #coding_standard = 'dvb-s2'
+    coding_gain = coding_gain(rate, standard)  # rate 1/2
+    ground_station_g_over_t = 20
+    spacecraft_transmit_power = 10  # dBW
+    spacecraft_transmit_losses = 2
 
-spacecraft_transmit_antenna_secondary_beamwidths = numpy.linspace(10, 180, num=PLOT_POINTS)
-spacecraft_transmit_antenna_secondary_gains = antenna_gain(spacecraft_transmit_antenna_secondary_beamwidths)
+    # Build symmetrical antenna gain vs beamwidth
+    spacecraft_transmit_antenna_primary_beamwidths = numpy.array([-10, 0, 10])
+    spacecraft_transmit_antenna_primary_gains = numpy.array([13, 16, 13])
 
-spacecraft_transmit_antenna_beamwidths = numpy.append(spacecraft_transmit_antenna_primary_beamwidths,
-                                                      spacecraft_transmit_antenna_secondary_beamwidths)
-spacecraft_transmit_antenna_gains = numpy.append(spacecraft_transmit_antenna_primary_gains,
-                                                 spacecraft_transmit_antenna_secondary_gains)
+    spacecraft_transmit_antenna_secondary_beamwidths = numpy.linspace(10, 180, num=PLOT_POINTS)
+    spacecraft_transmit_antenna_secondary_gains = antenna_gain(spacecraft_transmit_antenna_secondary_beamwidths)
 
-# # Assuming that the primary antenna gain is the greatest and most accurate, i.e. measured value,
-# # normalize the secondary modeled antenna gains to it
+    spacecraft_transmit_antenna_beamwidths = numpy.append(spacecraft_transmit_antenna_primary_beamwidths,
+                                                          spacecraft_transmit_antenna_secondary_beamwidths)
+    spacecraft_transmit_antenna_gains = numpy.append(spacecraft_transmit_antenna_primary_gains,
+                                                     spacecraft_transmit_antenna_secondary_gains)
 
-secondary_gain_start = len(spacecraft_transmit_antenna_primary_gains)
+    # # Assuming that the primary antenna gain is the greatest and most accurate, i.e. measured value,
+    # # normalize the secondary modeled antenna gains to it
 
-if spacecraft_transmit_antenna_gains[secondary_gain_start] > spacecraft_transmit_antenna_gains[secondary_gain_start-1]:
-    correction = spacecraft_transmit_antenna_gains[secondary_gain_start] - spacecraft_transmit_antenna_gains[secondary_gain_start-1]
-    spacecraft_transmit_antenna_gains[secondary_gain_start:] = spacecraft_transmit_antenna_gains[secondary_gain_start:] - correction
+    secondary_gain_start = len(spacecraft_transmit_antenna_primary_gains)
+
+    if spacecraft_transmit_antenna_gains[secondary_gain_start] > spacecraft_transmit_antenna_gains[
+        secondary_gain_start - 1]:
+        correction = spacecraft_transmit_antenna_gains[secondary_gain_start] - spacecraft_transmit_antenna_gains[
+            secondary_gain_start - 1]
+        spacecraft_transmit_antenna_gains[secondary_gain_start:] = spacecraft_transmit_antenna_gains[
+                                                                   secondary_gain_start:] - correction
+
+    altitudes = numpy.linspace(300E3, 1200E3, num=PLOT_POINTS)
+    swept_parameter_ylabel = 'Link Margin (dB)'
+    # swept_parameter_ylabel = 'Combined Antenna Gain (dB)'
+    swept_parameter_xlabel = 'Beamwidth (Absolute Degrees)'
+    # swept_parameter_xlabel = 'Altitude (km)'
+
+    # parameterizer(swept_parameter_xlabel, swept_parameter)
+
+    # TODO move this to a function
+    if swept_parameter_xlabel == 'Altitude (km)':
+        spacecraft_transmit_antenna_gains = spacecraft_transmit_antenna_primary_gains
+        sdr_specs = [sdr_spec] * len(altitudes)
+        cdr_specs = [cdr_spec] * len(altitudes)
+        min_specs = [min_spec] * len(altitudes)
+    elif swept_parameter_xlabel == 'Beamwidth (Absolute Degrees)':
+        altitudes = 500E3
+        sdr_specs = [sdr_spec] * len(spacecraft_transmit_antenna_gains)
+        cdr_specs = [cdr_spec] * len(spacecraft_transmit_antenna_gains)
+        min_specs = [min_spec] * len(spacecraft_transmit_antenna_gains)
+
+    satellite_slant_range = slant_range(altitudes, elevation_angle, EARTH_RADIUS)
+    minimum_ebn0 = ebn0(mission_bit_error_rate, modulation_type)
+    spacecraft_eirp = eirp(spacecraft_transmit_power,
+                           spacecraft_transmit_losses,
+                           spacecraft_transmit_antenna_gains)
+
+    c_over_n0 = \
+        spacecraft_eirp + \
+        ground_station_g_over_t + \
+        path_loss_free_space(satellite_slant_range, center_frequency) + \
+        path_loss_troposphere(satellite_slant_range, center_frequency) + \
+        path_loss_ionosphere(satellite_slant_range, center_frequency) + \
+        BOLTZMANN
+
+    actual_ebn0 = c_over_n0 - 10 * numpy.log10(modulated_bit_rate)
+    link_margins = actual_ebn0 - implementation_margin - minimum_ebn0 + coding_gain
+
+    # TODO move this to a function
+
+    if swept_parameter_xlabel == 'Altitude (km)' and swept_parameter_ylabel == 'Link Margin (dB)':
+        plt.plot(numpy.array(altitudes, dtype='float') / 1E3, link_margins)
+        plt.plot(numpy.array(altitudes, dtype='float') / 1E3, sdr_specs, color='green')
+        plt.plot(numpy.array(altitudes, dtype='float') / 1E3, cdr_specs, color='orange')
+        plt.plot(numpy.array(altitudes, dtype='float') / 1E3, min_specs, color='red')
+        plt.title(link_name)
+        plt.xlabel(swept_parameter_xlabel)
+        plt.ylabel('Link Margin (dB)')
+        plt.show()
+
+    elif swept_parameter_xlabel == 'Beamwidth (Absolute Degrees)' and swept_parameter_ylabel == 'Link Margin (dB)':
+        plt.plot(numpy.array(spacecraft_transmit_antenna_beamwidths, dtype='float'), link_margins)
+        plt.plot(numpy.array(spacecraft_transmit_antenna_beamwidths, dtype='float'), sdr_specs, color='green')
+        plt.plot(numpy.array(spacecraft_transmit_antenna_beamwidths, dtype='float'), cdr_specs, color='orange')
+        plt.plot(numpy.array(spacecraft_transmit_antenna_beamwidths, dtype='float'), min_specs, color='red')
+        plt.title(link_name)
+        plt.xlabel('Beamwidth (Absolute Degrees)')
+        plt.ylabel('Link Margin (dB)')
+        plt.show()
+
+    elif swept_parameter_xlabel == 'Beamwidth (Absolute Degrees)' and swept_parameter_ylabel == 'Combined Antenna Gain (dB)':
+        plt.plot(numpy.array(spacecraft_transmit_antenna_beamwidths, dtype='float'), spacecraft_transmit_antenna_gains)
+        plt.title(link_name)
+        plt.xlabel('Beamwidth (Absolute Degrees)')
+        plt.ylabel('Combined Antenna Gain (dB)')
+        plt.show()
+    return
+
+#output()
 
 
-altitudes = numpy.linspace(300E3, 1200E3, num=PLOT_POINTS)
-swept_parameter_ylabel = 'Link Margin (dB)'
-# swept_parameter_ylabel = 'Combined Antenna Gain (dB)'
-swept_parameter_xlabel = 'Beamwidth (Absolute Degrees)'
-# swept_parameter_xlabel = 'Altitude (km)'
-
-# parameterizer(swept_parameter_xlabel, swept_parameter)
-
-
-# TODO move this to a function
-if swept_parameter_xlabel == 'Altitude (km)':
-    spacecraft_transmit_antenna_gains = spacecraft_transmit_antenna_primary_gains
-    sdr_specs = [sdr_spec] * len(altitudes)
-    cdr_specs = [cdr_spec] * len(altitudes)
-    min_specs = [min_spec] * len(altitudes)
-elif swept_parameter_xlabel == 'Beamwidth (Absolute Degrees)':
-    altitudes = 500E3
-    sdr_specs = [sdr_spec] * len(spacecraft_transmit_antenna_gains)
-    cdr_specs = [cdr_spec] * len(spacecraft_transmit_antenna_gains)
-    min_specs = [min_spec] * len(spacecraft_transmit_antenna_gains)
-
-satellite_slant_range = slant_range(altitudes, elevation_angle, EARTH_RADIUS)
-minimum_ebn0 = ebn0(mission_bit_error_rate, modulation_type)
-spacecraft_eirp = eirp(spacecraft_transmit_power,
-                       spacecraft_transmit_losses,
-                       spacecraft_transmit_antenna_gains)
-
-c_over_n0 = \
-    spacecraft_eirp + \
-    ground_station_g_over_t + \
-    path_loss_free_space(satellite_slant_range, center_frequency) + \
-    path_loss_troposphere(satellite_slant_range, center_frequency) + \
-    path_loss_ionosphere(satellite_slant_range, center_frequency) + \
-    BOLTZMANN
-
-actual_ebn0 = c_over_n0 - 10 * numpy.log10(modulated_bit_rate)
-link_margins = actual_ebn0 - implementation_margin - minimum_ebn0 + coding_gain
-
-
-# TODO move this to a function
-
-if swept_parameter_xlabel == 'Altitude (km)' and swept_parameter_ylabel == 'Link Margin (dB)':
-    plt.plot(numpy.array(altitudes, dtype='float') / 1E3, link_margins)
-    plt.plot(numpy.array(altitudes, dtype='float') / 1E3, sdr_specs, color='green')
-    plt.plot(numpy.array(altitudes, dtype='float') / 1E3, cdr_specs, color='orange')
-    plt.plot(numpy.array(altitudes, dtype='float') / 1E3, min_specs, color='red')
-    plt.title(link_name)
-    plt.xlabel(swept_parameter_xlabel)
-    plt.ylabel('Link Margin (dB)')
-    plt.show()
-
-elif swept_parameter_xlabel == 'Beamwidth (Absolute Degrees)' and swept_parameter_ylabel == 'Link Margin (dB)':
-    plt.plot(numpy.array(spacecraft_transmit_antenna_beamwidths, dtype='float'), link_margins)
-    plt.plot(numpy.array(spacecraft_transmit_antenna_beamwidths, dtype='float'), sdr_specs, color='green')
-    plt.plot(numpy.array(spacecraft_transmit_antenna_beamwidths, dtype='float'), cdr_specs, color='orange')
-    plt.plot(numpy.array(spacecraft_transmit_antenna_beamwidths, dtype='float'), min_specs, color='red')
-    plt.title(link_name)
-    plt.xlabel('Beamwidth (Absolute Degrees)')
-    plt.ylabel('Link Margin (dB)')
-    plt.show()
-
-elif swept_parameter_xlabel == 'Beamwidth (Absolute Degrees)' and swept_parameter_ylabel == 'Combined Antenna Gain (dB)':
-    plt.plot(numpy.array(spacecraft_transmit_antenna_beamwidths, dtype='float'), spacecraft_transmit_antenna_gains)
-    plt.title(link_name)
-    plt.xlabel('Beamwidth (Absolute Degrees)')
-    plt.ylabel('Combined Antenna Gain (dB)')
-    plt.show()
+print(coding_gain(1/2, 'ccsds'))

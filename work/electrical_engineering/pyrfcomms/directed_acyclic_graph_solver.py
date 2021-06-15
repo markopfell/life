@@ -6,7 +6,8 @@
 # Sousa's idea:  high dimensionality can often be reduced into a few high SNR dimensions
 # TODO: solve/approach these ideas
 
-# From https://github.com/harrison-caudill/pylink/blob/master/examples/basic.py
+# From:
+# https://github.com/harrison-caudill/pylink/blob/master/examples/basic.py
 # !/usr/bin/env python
 
 import pylink
