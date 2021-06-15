@@ -5,6 +5,10 @@ from scipy import special
 import matplotlib.pyplot as plt
 
 
+def esn0_to_ebn0(esn0, spectral_efficiency):
+    return esn0+10*numpy.log10(spectral_efficiency)
+
+
 def coding_gain(rate, standard):
     if standard == 'ccsds':
         if rate == 1/2:
@@ -262,3 +266,4 @@ def output():
 
 
 print(coding_gain(1/2, 'ccsds'))
+print(coding_gain(1/2, 'dvbs2'))
