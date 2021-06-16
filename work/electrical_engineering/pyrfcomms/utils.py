@@ -3,6 +3,17 @@ import numpy
 from scipy import constants
 from scipy import special
 import matplotlib.pyplot as plt
+import pandas
+import os
+
+
+def current_working_directory():
+    return os.path.dirname(os.path.abspath(__file__))
+
+
+def dvb_s2_modcods(dvb_s2_modcods_csv):
+    df = pandas.read_csv(dvb_s2_modcods_csv, "|")
+    return df
 
 
 def esn0_to_ebn0(esn0, spectral_efficiency):
@@ -267,6 +278,11 @@ def output():
 # output()
 
 
-
 print(coding_gain(1/2, 'ccsds'))
 print(coding_gain(1/2, 'dvbs2'))
+
+dvb_s2_modcods_csv = r'dvb_s2_modcods.csv'
+dvb_s2_modcods_csv_file_path = current_working_directory() + '/'+dvb_s2_modcods_csv
+print(dvb_s2_modcods_csv_file_path)
+df = dvb_s2_modcods(dvb_s2_modcods_csv_file_path)
+print(df)
