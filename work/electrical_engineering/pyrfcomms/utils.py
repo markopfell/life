@@ -16,30 +16,30 @@ def dvb_s2_modcods(_dvb_s2_modcods_csv):
     return df
 
 
-def dvb_s2_modcod_searcher(df, modcod):
-    [spectral_efficiency, esn0] = [0,0]
+def dvb_s2_modcod_searcher(df, _modcod):
     for i, j in df.iterrows():
-        if df.iloc[i, 0] == modcod['modulation'] and _dvb_s2_modcods.iloc[i, 1] == modcod['error correction rate']:
+        if df.iloc[i, 0] == _modcod['modulation'] and _dvb_s2_modcods.iloc[i, 1] == _modcod['error correction rate']:
             spectral_efficiency = df.iloc[i, 2]
             esn0 = df.iloc[i, 3]
-            modcod.update({"spectral efficiency":spectral_efficiency, "esn0":esn0})
+            _modcod.update({"spectral efficiency": spectral_efficiency, "esn0": esn0})
     return
 
 
 def esn0_to_ebn0(esn0, spectral_efficiency):
-    return esn0+10*numpy.log10(spectral_efficiency)
+    return esn0-10*numpy.log10(spectral_efficiency)
 
 
-def coding_gain(rate, standard):
+def coding_gain(_modcod):
     _coding_gain = 0
-    if standard == 'ccsds':
-        if rate == 1/2:
+    if _modcod["standard"] == 'ccsds':
+        if _modcod["error correction rate"] == "3/4":
             _coding_gain = 14
 
-    elif standard == 'dvbs2':
+    elif _modcod["standard"] == 'dvbs2':
         # Final draft ETSI EN 302 307 V1.2.1 (2009-04)
         pass
-    return _coding_gain
+    _modcod.update({"coding gain": _coding_gain})
+    return
 
 
 def eirp(power_transmit, loss, gain_transmit):  # dBW, dB, dBi
@@ -288,28 +288,18 @@ def output():
 # output()
 
 
-print(coding_gain(1/2, 'ccsds'))
-print(coding_gain(1/2, 'dvbs2'))
-
+modcod = {"modulation": "8PSK", "error correction rate": "3/4", "standard": 'dvbs2'}
+coding_gain(modcod)
 dvb_s2_modcods_csv = r'dvb_s2_modcods.csv'
 dvb_s2_modcods_csv_file_path = current_working_directory() + '/'+dvb_s2_modcods_csv
-print(dvb_s2_modcods_csv_file_path)
 _dvb_s2_modcods = dvb_s2_modcods(dvb_s2_modcods_csv_file_path)
-# print(_dvb_s2_modcods.iloc[0,0])
-# print(_dvb_s2_modcods)
-
-
-# modcod[]
-
-# for i, j in _dvb_s2_modcods.iterrows():
-#     if _dvb_s2_modcods.iloc[i,0] == modulation and _dvb_s2_modcods.iloc[i,1] == error_correction_rate:
-#         print(_dvb_s2_modcods.iloc[i,3])
-
-# for i, j in _dvb_s2_modcods.iterrows():
-#     print(j)
-
-modcod = {"modulation":"8PSK", "error correction rate":"3/4"}
+modcod = {"modulation": "8PSK", "error correction rate": "3/4", "standard": 'dvbs2'}
 modulation = '8PSK'
 error_correction_rate = '3/4'
 dvb_s2_modcod_searcher(_dvb_s2_modcods, modcod)
-print(modcod["esn0"])
+
+print(esn0_to_ebn0(modcod["esn0"], modcod["spectral efficiency"]))
+modcod.update({"ebn0": esn0_to_ebn0(modcod["esn0"], modcod["spectral efficiency"])})
+# minimum_ebn0 = dvbs2 stuff looks up correct esn0, spectral efficiency, and back calculates ebn0
+# coding_gain = 0 for dvbs2 stuff
+
