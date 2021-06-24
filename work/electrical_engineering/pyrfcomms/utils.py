@@ -18,11 +18,11 @@ def dvb_s2_modcods(_dvb_s2_modcods_csv):
 
 def dvb_s2_modcod_searcher(df, _modcod):
     for i, j in df.iterrows():
-        if df.iloc[i, 0] == _modcod['modulation'] and _dvb_s2_modcods.iloc[i, 1] == _modcod['error correction rate']:
+        if df.iloc[i, 0] == _modcod['modulation'] and df.iloc[i, 1] == _modcod['error correction rate']:
             spectral_efficiency = df.iloc[i, 2]
             esn0 = df.iloc[i, 3]
-            _modcod.update({"spectral efficiency": spectral_efficiency, "esn0": esn0})
-    return
+            _modcod.update({'spectral efficiency': spectral_efficiency, 'esn0': esn0})
+    return _modcod
 
 
 def esn0_to_ebn0(esn0, spectral_efficiency):
@@ -31,15 +31,15 @@ def esn0_to_ebn0(esn0, spectral_efficiency):
 
 def coding_gain(_modcod):
     _coding_gain = 0
-    if _modcod["standard"] == 'ccsds':
-        if _modcod["error correction rate"] == "3/4":
+    if _modcod['standard'] == 'ccsds':
+        if _modcod['error correction rate'] == 3/4:
             _coding_gain = 14
 
-    elif _modcod["standard"] == 'dvbs2':
+    elif _modcod['standard'] == 'dvbs2':
         # Final draft ETSI EN 302 307 V1.2.1 (2009-04)
         pass
-    _modcod.update({"coding gain": _coding_gain})
-    return
+    _modcod.update({'coding gain': _coding_gain})
+    return _modcod
 
 
 def eirp(power_transmit, loss, gain_transmit):  # dBW, dB, dBi
@@ -125,43 +125,6 @@ def antenna_gain(beamwidths):
     _antenna_gains = 41253/(numpy.multiply(beamwidth_theta, beamwidth_phi))
 
     return 10 * numpy.log10(_antenna_gains*antenna_efficiency)
-
-
-def parameterizer(key, values):
-
-    link_margins = []
-
-    # TODO Arbitrary parameter value handling
-    for value in values:
-
-        satellite_slant_range = slant_range(value, elevation_angle, EARTH_RADIUS)
-
-        minimum_ebn0 = ebn0(mission_bit_error_rate, modulation_type)
-        spacecraft_eirp = eirp(spacecraft_transmit_power,
-                               spacecraft_transmit_losses,
-                               spacecraft_transmit_antenna_gains[:, 0])
-
-        c_over_n0 = \
-            spacecraft_eirp + \
-            ground_station_g_over_t + \
-            path_loss_free_space(satellite_slant_range, center_frequency) + \
-            path_loss_troposphere() + \
-            path_loss_troposphere() + \
-            BOLTZMANN
-
-        actual_ebn0 = c_over_n0 - 10 * numpy.log10(modulated_bit_rate)
-        link_margins.append(actual_ebn0 - implementation_margin - minimum_ebn0 + coding_gain)
-
-    plt.plot(numpy.array(altitudes, dtype='float') / 1E3, link_margins)
-    plt.plot(numpy.array(altitudes, dtype='float') / 1E3, sdr_specs, color='green')
-    plt.plot(numpy.array(altitudes, dtype='float') / 1E3, cdr_specs, color='orange')
-    plt.plot(numpy.array(altitudes, dtype='float') / 1E3, min_specs, color='red')
-    plt.title(link_name)
-    plt.xlabel(key)
-    plt.ylabel('Link Margin (dB)')
-    plt.show()
-
-    return
 
 
 def output():
@@ -288,18 +251,17 @@ def output():
 # output()
 
 
-modcod = {"modulation": "8PSK", "error correction rate": "3/4", "standard": 'dvbs2'}
-coding_gain(modcod)
+modcod = {'modulation': '8PSK', 'error correction rate': '3/4', 'standard': 'dvbs2'}
+modcod = coding_gain(modcod)
 dvb_s2_modcods_csv = r'dvb_s2_modcods.csv'
 dvb_s2_modcods_csv_file_path = current_working_directory() + '/'+dvb_s2_modcods_csv
 _dvb_s2_modcods = dvb_s2_modcods(dvb_s2_modcods_csv_file_path)
-modcod = {"modulation": "8PSK", "error correction rate": "3/4", "standard": 'dvbs2'}
 modulation = '8PSK'
 error_correction_rate = '3/4'
 dvb_s2_modcod_searcher(_dvb_s2_modcods, modcod)
-
-print(esn0_to_ebn0(modcod["esn0"], modcod["spectral efficiency"]))
-modcod.update({"ebn0": esn0_to_ebn0(modcod["esn0"], modcod["spectral efficiency"])})
+print(modcod)
+ebn0 = esn0_to_ebn0(modcod['esn0'], modcod['spectral efficiency'])
+modcod.update({'ebn0': ebn0})
 # minimum_ebn0 = dvbs2 stuff looks up correct esn0, spectral efficiency, and back calculates ebn0
 # coding_gain = 0 for dvbs2 stuff
 
