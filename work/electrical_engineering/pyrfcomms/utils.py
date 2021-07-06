@@ -102,6 +102,7 @@ def path_loss_ionosphere(distance, frequency):
 
 
 def path_loss_free_space(distance, frequency):
+    # If shape errors point here, it's likely the C/N sum in general terms -> eirp -> antenna gains
     _path_loss_free_space = 20 * numpy.log10((4 * numpy.pi * distance * frequency) /
                                              scipy.constants.value(u'speed of light in vacuum'))
     return -1*_path_loss_free_space
@@ -129,6 +130,18 @@ def antenna_gain(beamwidths):
 
 def output():
 
+    modcod = {'modulation': '8PSK', 'error correction rate': '3/4', 'standard': 'dvbs2'}
+    modcod = coding_gain(modcod)
+    dvb_s2_modcods_csv = r'dvb_s2_modcods.csv'
+    dvb_s2_modcods_csv_file_path = current_working_directory() + '/' + dvb_s2_modcods_csv
+    _dvb_s2_modcods = dvb_s2_modcods(dvb_s2_modcods_csv_file_path)
+    modulation = '8PSK'
+    error_correction_rate = '3/4'
+    dvb_s2_modcod_searcher(_dvb_s2_modcods, modcod)
+    print(modcod)
+    ebn0 = esn0_to_ebn0(modcod['esn0'], modcod['spectral efficiency'])
+    modcod.update({'ebn0': ebn0})
+
     EARTH_RADIUS = 6378 * 1000
     BOLTZMANN = -10 * numpy.log10(scipy.constants.value(u'Boltzmann constant'))
 
@@ -144,20 +157,17 @@ def output():
     link_name = frequency_name + ': ' + mission_name
     modulated_bit_rate = 100E6
     modulation_type = 'QPSK'
-    altitude = 600E3
     elevation_angle = 10
     center_frequency = 8025E6
     implementation_margin = 1
     mission_bit_error_rate = 1E-12
     rate = 1/2
-    coding_standard = 'ccsds_convolutional'
-    #coding_standard = 'dvb-s2'
-    coding_gain = coding_gain(rate, standard)  # rate 1/2
     ground_station_g_over_t = 20
     spacecraft_transmit_power = 10  # dBW
     spacecraft_transmit_losses = 2
 
-    # Build symmetrical antenna gain vs beamwidth
+    #TODO: Build symmetrical antenna gain vs beamwidth
+    #TODO: Lost 1 hr debugging 6/23/22
     spacecraft_transmit_antenna_primary_beamwidths = numpy.array([-10, 0, 10])
     spacecraft_transmit_antenna_primary_gains = numpy.array([13, 16, 13])
 
@@ -168,6 +178,7 @@ def output():
                                                           spacecraft_transmit_antenna_secondary_beamwidths)
     spacecraft_transmit_antenna_gains = numpy.append(spacecraft_transmit_antenna_primary_gains,
                                                      spacecraft_transmit_antenna_secondary_gains)
+
 
     # # Assuming that the primary antenna gain is the greatest and most accurate, i.e. measured value,
     # # normalize the secondary modeled antenna gains to it
@@ -183,9 +194,12 @@ def output():
 
     altitudes = numpy.linspace(300E3, 1200E3, num=PLOT_POINTS)
     swept_parameter_ylabel = 'Link Margin (dB)'
+    # swept_parameter_ylabel = 'Throughput (Mbps)'
     # swept_parameter_ylabel = 'Combined Antenna Gain (dB)'
-    swept_parameter_xlabel = 'Beamwidth (Absolute Degrees)'
-    # swept_parameter_xlabel = 'Altitude (km)'
+    swept_parameter_xlabel = 'Altitude (km)'
+    # swept_parameter_xlabel = 'Beamwidth (Absolute Degrees)'
+    # swept_parameter_xlabel = 'Elevation Angle (degrees)'
+
 
     # parameterizer(swept_parameter_xlabel, swept_parameter)
 
@@ -200,12 +214,35 @@ def output():
         sdr_specs = [sdr_spec] * len(spacecraft_transmit_antenna_gains)
         cdr_specs = [cdr_spec] * len(spacecraft_transmit_antenna_gains)
         min_specs = [min_spec] * len(spacecraft_transmit_antenna_gains)
+    elif swept_parameter_xlabel == 'Elevation Angle (degrees)':
+        pass
+        elevation_angles = numpy.linspace(1, 90, num=PLOT_POINTS)
+        sdr_specs = [sdr_spec] * len(elevation_angles)
+        cdr_specs = [cdr_spec] * len(elevation_angles)
+        min_specs = [min_spec] * len(elevation_angles)
+        satellite_slant_range = slant_range(altitudes, elevation_angles, EARTH_RADIUS)
 
     satellite_slant_range = slant_range(altitudes, elevation_angle, EARTH_RADIUS)
-    minimum_ebn0 = ebn0(mission_bit_error_rate, modulation_type)
+
+    minimum_ebn0 = 0
+
+    if modcod['standard'] == 'ccsds':
+        minimum_ebn0 = ebn0(mission_bit_error_rate, modulation_type)
+    elif modcod['standard'] == 'dvbs2':
+        minimum_ebn0 = modcod['ebn0']
+
     spacecraft_eirp = eirp(spacecraft_transmit_power,
                            spacecraft_transmit_losses,
                            spacecraft_transmit_antenna_gains)
+
+    # Careful here accidentally broadcasting matrix operations with WRONG DIMENSIONS = shapes
+    # TODO: redo all linspace calls
+    # TODO: Make this broadcast error catcher generalize ...
+    # if numpy.size(satellite_slant_range) != numpy.size(spacecraft_transmit_antenna_gains):
+    #     array_normalizer = numpy.size(spacecraft_transmit_antenna_gains) - numpy.size(satellite_slant_range)
+    #
+    #     for i in range(0,array_normalizer):
+    #         satellite_slant_range = numpy.append(satellite_slant_range,satellite_slant_range[0])
 
     c_over_n0 = \
         spacecraft_eirp + \
@@ -216,10 +253,9 @@ def output():
         BOLTZMANN
 
     actual_ebn0 = c_over_n0 - 10 * numpy.log10(modulated_bit_rate)
-    link_margins = actual_ebn0 - implementation_margin - minimum_ebn0 + coding_gain
+    link_margins = actual_ebn0 - implementation_margin - minimum_ebn0 + modcod['coding gain']
 
     # TODO move this to a function
-
     if swept_parameter_xlabel == 'Altitude (km)' and swept_parameter_ylabel == 'Link Margin (dB)':
         plt.plot(numpy.array(altitudes, dtype='float') / 1E3, link_margins)
         plt.plot(numpy.array(altitudes, dtype='float') / 1E3, sdr_specs, color='green')
@@ -246,22 +282,9 @@ def output():
         plt.xlabel('Beamwidth (Absolute Degrees)')
         plt.ylabel('Combined Antenna Gain (dB)')
         plt.show()
+    elif swept_parameter_xlabel == 'Elevation Angle (degrees)' and swept_parameter_ylabel == 'Throughput (Mbps)':
+        pass
+
     return
 
-# output()
-
-
-modcod = {'modulation': '8PSK', 'error correction rate': '3/4', 'standard': 'dvbs2'}
-modcod = coding_gain(modcod)
-dvb_s2_modcods_csv = r'dvb_s2_modcods.csv'
-dvb_s2_modcods_csv_file_path = current_working_directory() + '/'+dvb_s2_modcods_csv
-_dvb_s2_modcods = dvb_s2_modcods(dvb_s2_modcods_csv_file_path)
-modulation = '8PSK'
-error_correction_rate = '3/4'
-dvb_s2_modcod_searcher(_dvb_s2_modcods, modcod)
-print(modcod)
-ebn0 = esn0_to_ebn0(modcod['esn0'], modcod['spectral efficiency'])
-modcod.update({'ebn0': ebn0})
-# minimum_ebn0 = dvbs2 stuff looks up correct esn0, spectral efficiency, and back calculates ebn0
-# coding_gain = 0 for dvbs2 stuff
-
+output()
