@@ -164,33 +164,30 @@ def output():
     rate = 1/2
     ground_station_g_over_t = 20
     spacecraft_transmit_power = 10  # dBW
+    spacecraft_transmit_antenna_gains = 16
     spacecraft_transmit_losses = 2
 
     #TODO: Build symmetrical antenna gain vs beamwidth
-    #TODO: Lost 1 hr debugging 6/23/22
-    spacecraft_transmit_antenna_primary_beamwidths = numpy.array([-10, 0, 10])
-    spacecraft_transmit_antenna_primary_gains = numpy.array([13, 16, 13])
-
-    spacecraft_transmit_antenna_secondary_beamwidths = numpy.linspace(10, 180, num=PLOT_POINTS)
-    spacecraft_transmit_antenna_secondary_gains = antenna_gain(spacecraft_transmit_antenna_secondary_beamwidths)
-
-    spacecraft_transmit_antenna_beamwidths = numpy.append(spacecraft_transmit_antenna_primary_beamwidths,
-                                                          spacecraft_transmit_antenna_secondary_beamwidths)
-    spacecraft_transmit_antenna_gains = numpy.append(spacecraft_transmit_antenna_primary_gains,
-                                                     spacecraft_transmit_antenna_secondary_gains)
-
-
+    #TODO: Lost 2 hr debugging as of 11/5/21
+    # spacecraft_transmit_antenna_primary_beamwidths = numpy.array([-10, 0, 10])
+    # spacecraft_transmit_antenna_primary_gains = numpy.array([13, 16, 13])
+    #TODO fix broken distance append calcs
+    # spacecraft_transmit_antenna_secondary_beamwidths = numpy.linspace(10, 180, num=PLOT_POINTS)
+    # spacecraft_transmit_antenna_secondary_gains = antenna_gain(spacecraft_transmit_antenna_secondary_beamwidths)
+    #
+    # spacecraft_transmit_antenna_beamwidths = numpy.append(spacecraft_transmit_antenna_primary_beamwidths,
+    #                                                       spacecraft_transmit_antenna_secondary_beamwidths)
+    # spacecraft_transmit_antenna_gains = numpy.append(spacecraft_transmit_antenna_primary_gains,
+    #                                                  spacecraft_transmit_antenna_secondary_gains)
     # # Assuming that the primary antenna gain is the greatest and most accurate, i.e. measured value,
     # # normalize the secondary modeled antenna gains to it
-
-    secondary_gain_start = len(spacecraft_transmit_antenna_primary_gains)
-
-    if spacecraft_transmit_antenna_gains[secondary_gain_start] > spacecraft_transmit_antenna_gains[
-        secondary_gain_start - 1]:
-        correction = spacecraft_transmit_antenna_gains[secondary_gain_start] - spacecraft_transmit_antenna_gains[
-            secondary_gain_start - 1]
-        spacecraft_transmit_antenna_gains[secondary_gain_start:] = spacecraft_transmit_antenna_gains[
-                                                                   secondary_gain_start:] - correction
+    # secondary_gain_start = len(spacecraft_transmit_antenna_primary_gains)
+    # if spacecraft_transmit_antenna_gains[secondary_gain_start] > spacecraft_transmit_antenna_gains[
+    #     secondary_gain_start - 1]:
+    #     correction = spacecraft_transmit_antenna_gains[secondary_gain_start] - spacecraft_transmit_antenna_gains[
+    #         secondary_gain_start - 1]
+    #     spacecraft_transmit_antenna_gains[secondary_gain_start:] = spacecraft_transmit_antenna_gains[
+    #                                                                secondary_gain_start:] - correction
 
     altitudes = numpy.linspace(300E3, 1200E3, num=PLOT_POINTS)
     swept_parameter_ylabel = 'Link Margin (dB)'
@@ -205,7 +202,7 @@ def output():
 
     # TODO move this to a function
     if swept_parameter_xlabel == 'Altitude (km)':
-        spacecraft_transmit_antenna_gains = spacecraft_transmit_antenna_primary_gains
+        spacecraft_transmit_antenna_gains
         sdr_specs = [sdr_spec] * len(altitudes)
         cdr_specs = [cdr_spec] * len(altitudes)
         min_specs = [min_spec] * len(altitudes)
@@ -215,7 +212,7 @@ def output():
         cdr_specs = [cdr_spec] * len(spacecraft_transmit_antenna_gains)
         min_specs = [min_spec] * len(spacecraft_transmit_antenna_gains)
     elif swept_parameter_xlabel == 'Elevation Angle (degrees)':
-        pass
+        # pass
         elevation_angles = numpy.linspace(1, 90, num=PLOT_POINTS)
         sdr_specs = [sdr_spec] * len(elevation_angles)
         cdr_specs = [cdr_spec] * len(elevation_angles)
