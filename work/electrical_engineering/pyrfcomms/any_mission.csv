@@ -1,0 +1,17 @@
+key,value
+frequency_name,X-band Downlink
+mission_name,AnyMission™
+modulated_bit_rate,100E6
+elevation_angle,5
+center_frequency,8300E6
+implementation_margin,1.00
+mission_bit_error_rate,1E-12
+ground_station_g_over_t,20
+spacecraft_transmit_power,10
+spacecraft_transmit_antenna_gains,16
+spacecraft_transmit_losses,2.00
+modulation,8PSK
+error correction rate,3/4
+standard,dvbs2
+sdr_spec,6
+cdr_spec,3

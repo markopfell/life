@@ -128,21 +128,25 @@ def antenna_gain(beamwidths):
 
 def output():
 
-    frequency_name = 'X-band Downlink'
-    mission_name = 'AnyMission™'
-    modulated_bit_rate = 100E6
-    elevation_angle = 10
-    center_frequency = 8025E6
-    implementation_margin = 1
-    mission_bit_error_rate = 1E-12
-    ground_station_g_over_t = 20
-    spacecraft_transmit_power = 10  # dBW
-    spacecraft_transmit_antenna_gains = 16
-    spacecraft_transmit_losses = 2
-    modcod = {'modulation': '8PSK', 'error correction rate': '3/4', 'standard': 'dvbs2'}
-    sdr_spec = 6  # dB,     # ARC-STD-8070.1 : https://www.nasa.gov/sites/default/files/atoms/files/std8070.1.pdf
-    cdr_spec = 3  # dB,     # ARC-STD-8070.1 : https://www.nasa.gov/sites/default/files/atoms/files/std8070.1.pdf
+    mission_csv = r'any_mission.csv'
+    mission_csv_file_path = current_working_directory() + '/' + mission_csv
+    mission = pandas.read_csv(mission_csv_file_path, header=None, index_col=0, squeeze=True).to_dict()
 
+    # TODO fix this stupidity
+    frequency_name = mission['frequency_name']
+    mission_name = mission['mission_name']
+    modulated_bit_rate = float(mission['modulated_bit_rate'])
+    elevation_angle = float(mission['elevation_angle'])
+    center_frequency = float(mission['center_frequency'])
+    implementation_margin = float(mission['implementation_margin'])
+    mission_bit_error_rate = float(mission['mission_bit_error_rate'])
+    ground_station_g_over_t = float(mission['ground_station_g_over_t'])
+    spacecraft_transmit_power = float(mission['spacecraft_transmit_power'])
+    spacecraft_transmit_antenna_gains = float(mission['spacecraft_transmit_antenna_gains'])
+    spacecraft_transmit_losses = float(mission['spacecraft_transmit_losses'])
+    sdr_spec = float(mission['sdr_spec'])
+    cdr_spec = float(mission['cdr_spec'])
+    modcod = {'modulation': '8PSK', 'error correction rate': '3/4', 'standard': 'dvbs2'}
     modcod = coding_gain(modcod)
     dvb_s2_modcods_csv = r'dvb_s2_modcods.csv'
     dvb_s2_modcods_csv_file_path = current_working_directory() + '/' + dvb_s2_modcods_csv
@@ -151,11 +155,11 @@ def output():
     ebn0 = esn0_to_ebn0(modcod['esn0'], modcod['spectral efficiency'])
     modcod.update({'ebn0': ebn0})
 
-    #TODO: Build symmetrical antenna gain vs beamwidth
-    #TODO: Lost 2 hr debugging as of 11/5/21
+    # TODO: Build symmetrical antenna gain vs beamwidth
+    # TODO: Lost 2 hr debugging as of 11/5/21
     # spacecraft_transmit_antenna_primary_beamwidths = numpy.array([-10, 0, 10])
     # spacecraft_transmit_antenna_primary_gains = numpy.array([13, 16, 13])
-    #TODO fix broken distance append calcs
+    # TODO fix broken distance append calcs
     # spacecraft_transmit_antenna_secondary_beamwidths = numpy.linspace(10, 180, num=PLOT_POINTS)
     # spacecraft_transmit_antenna_secondary_gains = antenna_gain(spacecraft_transmit_antenna_secondary_beamwidths)
     #
