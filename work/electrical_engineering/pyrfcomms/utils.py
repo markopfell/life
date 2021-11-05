@@ -130,9 +130,7 @@ def output():
 
     frequency_name = 'X-band Downlink'
     mission_name = 'AnyMission™'
-    link_name = frequency_name + ': ' + mission_name
     modulated_bit_rate = 100E6
-    modulation_type = 'QPSK'
     elevation_angle = 10
     center_frequency = 8025E6
     implementation_margin = 1
@@ -175,6 +173,7 @@ def output():
     #     spacecraft_transmit_antenna_gains[secondary_gain_start:] = spacecraft_transmit_antenna_gains[
     #                                                                secondary_gain_start:] - correction
 
+    link_name = frequency_name + ': ' + mission_name
     min_spec = 0  # 100% likely bit drops here (dB)
     PLOT_POINTS = 100
     altitudes = numpy.linspace(300E3, 1200E3, num=PLOT_POINTS)
