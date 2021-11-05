@@ -6,14 +6,12 @@ import matplotlib.pyplot as plt
 import pandas
 import os
 
+EARTH_RADIUS = 6378 * 1000
+BOLTZMANN = -10 * numpy.log10(scipy.constants.value(u'Boltzmann constant'))
+
 
 def current_working_directory():
     return os.path.dirname(os.path.abspath(__file__))
-
-
-def dvb_s2_modcods(_dvb_s2_modcods_csv):
-    df = pandas.read_csv(_dvb_s2_modcods_csv, sep=",", )
-    return df
 
 
 def dvb_s2_modcod_searcher(df, _modcod):
@@ -130,28 +128,6 @@ def antenna_gain(beamwidths):
 
 def output():
 
-    modcod = {'modulation': '8PSK', 'error correction rate': '3/4', 'standard': 'dvbs2'}
-    modcod = coding_gain(modcod)
-    dvb_s2_modcods_csv = r'dvb_s2_modcods.csv'
-    dvb_s2_modcods_csv_file_path = current_working_directory() + '/' + dvb_s2_modcods_csv
-    _dvb_s2_modcods = dvb_s2_modcods(dvb_s2_modcods_csv_file_path)
-    modulation = '8PSK'
-    error_correction_rate = '3/4'
-    dvb_s2_modcod_searcher(_dvb_s2_modcods, modcod)
-    print(modcod)
-    ebn0 = esn0_to_ebn0(modcod['esn0'], modcod['spectral efficiency'])
-    modcod.update({'ebn0': ebn0})
-
-    EARTH_RADIUS = 6378 * 1000
-    BOLTZMANN = -10 * numpy.log10(scipy.constants.value(u'Boltzmann constant'))
-
-    PLOT_POINTS = 100
-
-    # ARC-STD-8070.1 : https://www.nasa.gov/sites/default/files/atoms/files/std8070.1.pdf
-    sdr_spec = 6  # dB
-    cdr_spec = 3  # dB
-    min_spec = 0  # 100% likely bit drops here (dB)
-
     frequency_name = 'X-band Downlink'
     mission_name = 'AnyMission™'
     link_name = frequency_name + ': ' + mission_name
@@ -161,11 +137,21 @@ def output():
     center_frequency = 8025E6
     implementation_margin = 1
     mission_bit_error_rate = 1E-12
-    rate = 1/2
     ground_station_g_over_t = 20
     spacecraft_transmit_power = 10  # dBW
     spacecraft_transmit_antenna_gains = 16
     spacecraft_transmit_losses = 2
+    modcod = {'modulation': '8PSK', 'error correction rate': '3/4', 'standard': 'dvbs2'}
+    sdr_spec = 6  # dB,     # ARC-STD-8070.1 : https://www.nasa.gov/sites/default/files/atoms/files/std8070.1.pdf
+    cdr_spec = 3  # dB,     # ARC-STD-8070.1 : https://www.nasa.gov/sites/default/files/atoms/files/std8070.1.pdf
+
+    modcod = coding_gain(modcod)
+    dvb_s2_modcods_csv = r'dvb_s2_modcods.csv'
+    dvb_s2_modcods_csv_file_path = current_working_directory() + '/' + dvb_s2_modcods_csv
+    _dvb_s2_modcods = pandas.read_csv(dvb_s2_modcods_csv_file_path, sep=",", )
+    dvb_s2_modcod_searcher(_dvb_s2_modcods, modcod)
+    ebn0 = esn0_to_ebn0(modcod['esn0'], modcod['spectral efficiency'])
+    modcod.update({'ebn0': ebn0})
 
     #TODO: Build symmetrical antenna gain vs beamwidth
     #TODO: Lost 2 hr debugging as of 11/5/21
@@ -189,6 +175,8 @@ def output():
     #     spacecraft_transmit_antenna_gains[secondary_gain_start:] = spacecraft_transmit_antenna_gains[
     #                                                                secondary_gain_start:] - correction
 
+    min_spec = 0  # 100% likely bit drops here (dB)
+    PLOT_POINTS = 100
     altitudes = numpy.linspace(300E3, 1200E3, num=PLOT_POINTS)
     swept_parameter_ylabel = 'Link Margin (dB)'
     # swept_parameter_ylabel = 'Throughput (Mbps)'
