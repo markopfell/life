@@ -181,12 +181,15 @@ def output():
     min_spec = 0  # 100% likely bit drops here (dB)
     PLOT_POINTS = 100
     altitudes = numpy.linspace(300E3, 1200E3, num=PLOT_POINTS)
+
     swept_parameter_ylabel = 'Link Margin (dB)'
     # swept_parameter_ylabel = 'Throughput (Mbps)'
     # swept_parameter_ylabel = 'Combined Antenna Gain (dB)'
-    swept_parameter_xlabel = 'Altitude (km)'
+    # swept_parameter_xlabel = 'Altitude (km)'
     # swept_parameter_xlabel = 'Beamwidth (Absolute Degrees)'
-    # swept_parameter_xlabel = 'Elevation Angle (degrees)'
+    swept_parameter_xlabel = 'Elevation Angle (degrees)'
+
+    satellite_slant_range = slant_range(altitudes, elevation_angle, EARTH_RADIUS)
 
 
     # parameterizer(swept_parameter_xlabel, swept_parameter)
@@ -204,13 +207,14 @@ def output():
         min_specs = [min_spec] * len(spacecraft_transmit_antenna_gains)
     elif swept_parameter_xlabel == 'Elevation Angle (degrees)':
         # pass
-        elevation_angles = numpy.linspace(1, 90, num=PLOT_POINTS)
+        altitudes = 300E3
+        elevation_angles = numpy.geomspace(1, 90, int(PLOT_POINTS/2))
+        elevation_angles = numpy.concatenate((elevation_angles, numpy.flip(elevation_angles)))
         sdr_specs = [sdr_spec] * len(elevation_angles)
         cdr_specs = [cdr_spec] * len(elevation_angles)
         min_specs = [min_spec] * len(elevation_angles)
         satellite_slant_range = slant_range(altitudes, elevation_angles, EARTH_RADIUS)
 
-    satellite_slant_range = slant_range(altitudes, elevation_angle, EARTH_RADIUS)
 
     minimum_ebn0 = 0
 
@@ -253,6 +257,17 @@ def output():
         plt.xlabel(swept_parameter_xlabel)
         plt.ylabel('Link Margin (dB)')
         plt.show()
+
+    elif swept_parameter_xlabel == 'Elevation Angle (degrees)' and swept_parameter_ylabel == 'Link Margin (dB)':
+        plt.plot(link_margins)
+        plt.plot(elevation_angles, sdr_specs, color='green')
+        plt.plot(elevation_angles, cdr_specs, color='orange')
+        plt.plot(elevation_angles, min_specs, color='red')
+        plt.title(link_name)
+        plt.xlabel(swept_parameter_xlabel)
+        plt.ylabel('Link Margin (dB)')
+        plt.show()
+
 
     elif swept_parameter_xlabel == 'Beamwidth (Absolute Degrees)' and swept_parameter_ylabel == 'Link Margin (dB)':
         plt.plot(numpy.array(spacecraft_transmit_antenna_beamwidths, dtype='float'), link_margins)
