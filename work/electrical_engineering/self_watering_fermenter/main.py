@@ -8,5 +8,7 @@ pump = Pin(0, Pin.OUT)
 sensor = Pin(1, Pin.IN)
 
 while True:
-    if sensor.value() == 1:
-        pump.value(1)
+     # Liquid level sensor high == 1/logic level high in air
+    if sensor.value() == 1: 
+        # Gate of N-channel MOSFET switching Drain->Source to ground from float to 5V
+        pump.value(1)    
