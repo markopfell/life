@@ -37,16 +37,40 @@ def open_street_maps_find_one_way_streets(_place_name, silent=False):
 
 def zillow_search_html(_url, test=False):
 
+    text = None
+
     if not test:
         # TODO:  Get this working
-        text = response.text
+        # text = response.text
+        pass
     else:
         print("Reading from local file...")
-        input_path = os.path.join(os.path.dirname(__file__), 'zillow_search.html')
+        input_path = os.path.join(os.path.dirname(__file__), 'Rental Listings in Long Beach CA - 114 Rentals _ Zillow.html')
         with open(input_path, 'r', encoding='utf-8') as f:
             text = f.read()
 
     soup = BeautifulSoup(text, features="html.parser")
+
+    # Zillow specific:
+    # 
+    # Find the </address> tag, then the next div with the desired attribute
+    # address is in line 4068, where we want 1516 E. 2nd Street 
+    # the parent of that tag is a </style> tag
+    # inspecting the page gives us the following structure
+    # <html>
+    #   <head> stuff0 </head> 
+    #   <body class="responsive-search-page nav-full-width"> stuff1 </body class>        (</address> is here)
+    #   <iframe> stuff2 </iframe>
+    # </html>
+    # 
+    # within the </body class"responsive-search-page nav-full-width"> <body> tags the sub structure is 
+    # <upper upper level tags>   these describe the search result page
+    #    <ul class>             ... and finally many layers down    container = soup.find('body', class_='responsive-search-page nav-full-width') we have ALL the listing cards
+    #       <dl class>          this is the individual listing where </address> is located a few levels down
+    
+    # container = soup.find('body', class_=['responsive-search-page'])
+    container = soup.find('head')
+    print(container.prettify())
 
     return
 
