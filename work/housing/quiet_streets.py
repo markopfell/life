@@ -45,7 +45,7 @@ def zillow_search_html(_url, test=False):
         pass
     else:
         print("Reading from local file...")
-        input_path = os.path.join(os.path.dirname(__file__), 'Rental Listings in Long Beach CA - 114 Rentals _ Zillow.html')
+        input_path = os.path.join(os.path.dirname(__file__), 'Rental Listings in Long Beach CA - 114 Rentals _ Zillow')
         with open(input_path, 'r', encoding='utf-8') as f:
             text = f.read()
 
