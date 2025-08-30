@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e" pages="2">
     <diagram id="jaB2SiIFCLuGO67Z2-Vq" name="v1">
-        <mxGraphModel dx="-103" dy="1456" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="-295" dy="576" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -113,8 +113,8 @@
                 <mxCell id="42M_0qUng9n8N9hLyWBo-30" value="" style="pointerEvents=1;verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;shape=mxgraph.electrical.signal_sources.protective_earth;rotation=0;" parent="1" vertex="1">
                     <mxGeometry x="1284.16" y="858" width="25" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="42M_0qUng9n8N9hLyWBo-31" value="D5: 5V DC 1000mA (1A)&amp;nbsp;&lt;div&gt;regulated switching power adapter - UL listed&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;" parent="1" vertex="1">
-                    <mxGeometry x="872" y="990.5" width="258" height="41" as="geometry"/>
+                <mxCell id="42M_0qUng9n8N9hLyWBo-31" value="D5: 5V DC 1000mA (1A)&amp;nbsp; and LARGE package regulators&amp;nbsp;LM317_TO-220&lt;div&gt;regulated switching power adapter - UL listed&lt;/div&gt;&lt;div&gt;not this cute &quot;1 A&quot; board that the regulators overheat and shut off:&amp;nbsp;&amp;nbsp;&lt;/div&gt;&lt;div&gt;https://www.amazon.com/dp/B09YRJQRFF?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_18&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="872" y="976.5" width="520" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="42M_0qUng9n8N9hLyWBo-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.544;entryY=0.005;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=12;endArrow=none;endFill=0;" parent="1" target="42M_0qUng9n8N9hLyWBo-12" edge="1">
                     <mxGeometry relative="1" as="geometry">
@@ -134,7 +134,7 @@
                         <mxPoint x="1250" y="840" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="2" value="5 V - 1 V = 4 V" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="42M_0qUng9n8N9hLyWBo-34">
+                <mxCell id="2" value="5 V - 1 V = 4 V" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="42M_0qUng9n8N9hLyWBo-34" vertex="1" connectable="0">
                     <mxGeometry x="-0.1116" y="2" relative="1" as="geometry">
                         <mxPoint x="-1" as="offset"/>
                     </mxGeometry>
@@ -146,7 +146,7 @@
                     <mxGeometry x="1310.5" y="655" width="37" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="42M_0qUng9n8N9hLyWBo-37" value="While water sensor = OFF -&amp;gt; pump on with some counting and waiting basically" style="text;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="872" y="1031.5" width="230" height="40" as="geometry"/>
+                    <mxGeometry x="876" y="1046.5" width="230" height="40" as="geometry"/>
                 </mxCell>
                 <UserObject label="Version 1&lt;br&gt;analog" lucidchartObjectId="5kkP-dhNkhtR" id="42M_0qUng9n8N9hLyWBo-38">
                     <mxCell style="html=1;overflow=block;blockSpacing=1;whiteSpace=wrap;fontSize=53;align=left;spacing=3.8;verticalAlign=top;strokeColor=#82b366;fillOpacity=0;rounded=1;absoluteArcSize=1;arcSize=9;fillColor=#d5e8d4;strokeWidth=0;fillStyle=solid;fontColor=#FFFFFF;" parent="1" vertex="1">
@@ -175,7 +175,7 @@
                         <mxPoint x="1298.349000000002" y="612.6015699999989" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="3" value="" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;shape=mxgraph.electrical.mosfets1.mosfet_ic_p;" vertex="1" parent="1">
+                <mxCell id="3" value="" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;shape=mxgraph.electrical.mosfets1.mosfet_ic_p;" parent="1" vertex="1">
                     <mxGeometry x="1253.72" y="793.5" width="61.28" height="64.5" as="geometry"/>
                 </mxCell>
             </root>
