@@ -3697,9 +3697,9 @@
 		)
 		(uuid "4c000d04-595e-4bbc-95cc-586cb73664bf")
 	)
-	(text "liquid level sensor\n(circuit encpsulate)\n5 V output signal \non green wire\n\nclosest to ITR9608-F\nphotointerrupter\nPush-pull high in air"
+	(text "liquid level sensor\n(circuit encapsulated)\n4 V (Vs - 1 V) output signal \non green wire\n\nclosest to ITR9608-F\nphotointerrupter\nPush-pull high in air"
 		(exclude_from_sim no)
-		(at 66.04 134.62 0)
+		(at 60.452 134.874 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4512,7 +4512,7 @@
 	(rule_area
 		(polyline
 			(pts
-				(xy 64.135 124.46) (xy 64.135 154.94) (xy 126.365 154.94) (xy 126.365 124.46)
+				(xy 58.42 124.46) (xy 58.42 154.94) (xy 125.095 154.94) (xy 125.095 124.46)
 			)
 			(stroke
 				(width 0)
