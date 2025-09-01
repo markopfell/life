@@ -41,7 +41,7 @@ def open_street_maps_find_one_way_streets(_place_name, _test=False, _output_to_f
     else:
         print('Skipping one-way street extraction...')
 
-def zillow_search_html(_url, _test=False, _silent=True):
+def zillow_search_html(_city, _url, _test=False, _silent=True):
 
     text = None
 
@@ -80,9 +80,59 @@ def zillow_search_html(_url, _test=False, _silent=True):
 
     if _silent:
         for container in containers:
-            print(type(container)) # Should be <class 'bs4.element.Tag'>
-            print(str(container.contents))
             print(container.prettify())
+        print('\n')
+
+    if _silent:
+        for container in containers:
+            # print(type(container)) # Should be <class 'bs4.element.Tag'>
+            print(str(container.contents))
+        print('\n')
+
+    complex_addresses = []        
+
+    for container in containers:
+        # print(type(container)) # Should be <class 'bs4.element.Tag'>
+        try:
+            complex_addresses.append(str(container.contents[0]))
+        except IndexError:
+            pass
+
+    if _silent:
+        for i, complex_address in enumerate(complex_addresses):
+            # print(complex_address)
+            # Example: ['1516 E. 2nd Street', ' 1516 E 2nd St APT 2', ' Long Beach', ' CA 90802']
+            # print('\t', complex_address.split(','))
+
+            if i == 0:
+                print(complex_address.split(','))
+
+        print('\n')
+
+    addresses = []
+    for complex_address in complex_addresses:
+        address_components = complex_address.split(',')
+        
+
+        address_index = 0
+        for i, component in enumerate(address_components):
+            if _city in component:
+                address_index = i - 1
+
+        if '|' in address_components[address_index]:
+            address_components[address_index] = address_components[address_index].split('|')[1].strip()
+        else:
+            addresses.append(address_components[address_index])
+
+
+    if _silent:
+        print(addresses[0]) # 1516 E 2nd St APT 2
+        print ('\n')
+        for i, address in enumerate(addresses):
+            # print(address)
+            if i == 0:
+                print(address.split(' ')[1:]) # ['1516', 'E', '2nd', 'St', 'APT', '2']
+        print('\n')
 
     print('Number of Zillow rental listing cards: {}'.format(len(containers)))
     print("Finished processing addresses.")
@@ -90,11 +140,18 @@ def zillow_search_html(_url, _test=False, _silent=True):
     return
 
 def main():
+
+    city = 'Long Beach'
+    state = 'CA'
+    country = 'USA'
+
+    place_name = str(city + ', ' + state + ', ' + country)
+
     place_name = 'Long Beach, CA, USA'
     zillow_search_url = 'https://www.zillow.com/long-beach-ca/rentals/?searchQueryState=%7B%22pagination%22%3A%7B%7D%2C%22isMapVisible%22%3Atrue%2C%22mapBounds%22%3A%7B%22west%22%3A-118.26751773364256%2C%22east%22%3A-118.04470126635741%2C%22south%22%3A33.68558471156971%2C%22north%22%3A33.89045561170285%7D%2C%22regionSelection%22%3A%5B%7B%22regionId%22%3A46298%2C%22regionType%22%3A6%7D%5D%2C%22filterState%22%3A%7B%22fr%22%3A%7B%22value%22%3Atrue%7D%2C%22fsba%22%3A%7B%22value%22%3Afalse%7D%2C%22fsbo%22%3A%7B%22value%22%3Afalse%7D%2C%22nc%22%3A%7B%22value%22%3Afalse%7D%2C%22cmsn%22%3A%7B%22value%22%3Afalse%7D%2C%22auc%22%3A%7B%22value%22%3Afalse%7D%2C%22fore%22%3A%7B%22value%22%3Afalse%7D%2C%22sqft%22%3A%7B%22min%22%3A750%7D%2C%2255plus%22%3A%7B%22value%22%3A%22e%22%7D%2C%22doz%22%3A%7B%22value%22%3A%227%22%7D%2C%22mp%22%3A%7B%22min%22%3A1600%2C%22max%22%3A3000%7D%2C%22price%22%3A%7B%22min%22%3A318207%2C%22max%22%3A596639%7D%7D%2C%22isListVisible%22%3Atrue%2C%22mapZoom%22%3A12%2C%22usersSearchTerm%22%3A%22Long%20Beach%20CA%22%7D'
 
     open_street_maps_find_one_way_streets(place_name, True, False)
-    zillow_search_html(zillow_search_url, True, True)
+    zillow_search_html(city, zillow_search_url, True, True)
 
 
 main()
