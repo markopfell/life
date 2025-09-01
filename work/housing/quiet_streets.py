@@ -45,7 +45,7 @@ def zillow_search_html(_url, test=False):
         pass
     else:
         print("Reading from local file...")
-        input_path = os.path.join(os.path.dirname(__file__), 'Rental Listings in Long Beach CA - 114 Rentals _ Zillow')
+        input_path = os.path.join(os.path.dirname(__file__), 'Rental Listings in Long Beach CA - 106 Rentals _ Zillow.html')
         with open(input_path, 'r', encoding='utf-8') as f:
             text = f.read()
 
@@ -66,10 +66,12 @@ def zillow_search_html(_url, test=False):
     # within the </body class"responsive-search-page nav-full-width"> <body> tags the sub structure is 
     # <upper upper level tags>   these describe the search result page
     #    <ul class>             ... and finally many layers down    container = soup.find('body', class_='responsive-search-page nav-full-width') we have ALL the listing cards
-    #       <dl class>          this is the individual listing where </address> is located a few levels down
+    #       <dl class>          this is the individual listing
+    #           ...
+    #               </address> is located a few levels down
     
     # container = soup.find('body', class_=['responsive-search-page'])
-    container = soup.find('head')
+    container = soup.find('address')
     print(container.prettify())
 
     return
