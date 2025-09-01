@@ -158,7 +158,7 @@ def zillow_search_html(_city, _url, _test=False, _silent=True):
     print('Number of Zillow rental listing cards: {}'.format(len(containers)))
     print("Finished processing addresses.")
 
-    return
+    return addresses
 
 def street_abbreviations(_street_abbreviations_file, _test=False, _silent=False):
 
@@ -186,7 +186,8 @@ def main():
 
     street_abbreviations_df = street_abbreviations(street_abbreviations_file, True, True)
     open_street_maps_find_one_way_streets(place_name, True, False)
-    zillow_search_html(city, zillow_search_url, True, False)
+    abbreviated_rental_addresses = zillow_search_html(city, zillow_search_url, True, True)
+
 
 
 main()
