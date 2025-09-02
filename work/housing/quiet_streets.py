@@ -213,7 +213,7 @@ def uncompressed_street_names(addresses, _street_abbreviations_df, _test, _silen
 
 def rentals_on_one_way_streets(_addresses, _one_way_streets, _test, _silent):
     if _test and _silent:
-        print('\n\nFinding rentals on one-way streets:\n')
+        print('\n\nFinding rentals potentially on one-way streets:\n')
 
         for address in _addresses:
 
@@ -224,7 +224,15 @@ def rentals_on_one_way_streets(_addresses, _one_way_streets, _test, _silent):
 
             for _one_way_street in _one_way_streets:
                 if street_name == _one_way_street:
-                    print(f'Found rental on one-way street: {address}')
+                    print(f'Found rental on potentially a one-way street: {address}')
+
+                    # https://www.google.com/maps/place/926+Locust+Ave,+Long+Beach,+CA+90813/
+                    parts = '+'.join(address.split(' ') + ['Long', 'Beach', 'CA'])
+                    # print(parts)
+
+                    search_query = ''.join(['https://www.google.com/maps/place/', parts])
+                    print(search_query)
+                    print('\n')
     return
 
 
