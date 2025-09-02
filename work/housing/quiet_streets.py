@@ -3,12 +3,13 @@ import osmnx as ox
 import requests
 from bs4 import BeautifulSoup 
 import pandas
+import copy
 
 def open_street_maps_find_one_way_streets(_place_name, _test=False, _output_to_file=False):
 
     unique_one_way_streets = None
 
-    if not _test:
+    if _test:
         print("Downloading street network...")
         _place_name = 'Long Beach, CA, USA'
 
@@ -27,12 +28,13 @@ def open_street_maps_find_one_way_streets(_place_name, _test=False, _output_to_f
                         one_way_streets.append(name)
                 else:
                     one_way_streets.append(street_name)
+                    print('oneway street: ', street_name)
 
         unique_one_way_streets = sorted(set(one_way_streets))
-        print(f"Found {len(unique_one_way_streets)} unique one-way streets in {place_name}.")
+        # print(f"Found {len(unique_one_way_streets)} unique one-way streets in {place_name}.")
 
-        # for street in unique_one_way_streets:
-        #     print(street)
+        for street in unique_one_way_streets:
+            print(street)
 
         if _output_to_file:
             # Write the list to a file in the current script directory
@@ -43,6 +45,9 @@ def open_street_maps_find_one_way_streets(_place_name, _test=False, _output_to_f
                     f.write(f"{street}\n")
     else:
         print('Skipping one-way street extraction...')
+
+    # for street in unique_one_way_streets:
+    #     print(street)
 
     return unique_one_way_streets
 
@@ -159,24 +164,67 @@ def street_abbreviations(_street_abbreviations_file, _test=False, _silent=False)
 
     return _street_abbreviations_df
 
+
+
 def uncompressed_street_names(addresses, _street_abbreviations_df, _test, _silent):
     # TODO: Implement uncompression logic
 
+    uncompressed_streets = []
+
+    for _abbreviated_address in addresses:
+        if _test and _silent:
+            # print('Open Street maps quiet street uncompressed name:\n')
+            # print('East 2nd Street\n')
+            # _abbreviated_address = '1516 E 2nd St APT 2'
+
+            # search_value = 'St'
+
+            number = _abbreviated_address.split(' ')[0]
+
+            street_name_end_index = 0
+
+            for i, part in enumerate(_abbreviated_address.split(' ')):
+                if part == 'APT' or '#' in part:
+                    street_name_end_index = i - 1
+
+            abbreviated_street_name_a = (_abbreviated_address.split(' '))[1:street_name_end_index + 1]
+            print('Parsed abbreviated street name from abbreviated address:')
+            print(abbreviated_street_name_a)
+
+            uncompressed_street_name = copy.deepcopy(abbreviated_street_name_a)
+
+            for i, part in enumerate(abbreviated_street_name_a):
+
+                for idx, row in _street_abbreviations_df.iterrows():
+                    for col in _street_abbreviations_df.columns:
+                        if pandas.notnull(row[col]) and str(row[col]).lower() == str(part).lower():
+                            # print(row[0])
+                            uncompressed_street_name[i] = row[0]
+
+            print('Uncompressed street name:')
+            print('\t',' '.join(uncompressed_street_name))
+
+            print('Uncompressed main address:')
+            print(' '.join([number] + uncompressed_street_name))
+
+            uncompressed_streets.append(' '.join([number] + uncompressed_street_name))
+
+    return uncompressed_streets
+
+def rentals_on_one_way_streets(_addresses, _one_way_streets, _test, _silent):
     if _test and _silent:
-        print('Open Street maps quiet street uncompressed name:\n')
-        print('East 2nd Street\n')
-        _abbreviated_address = '1516 E 2nd St APT 2'
+        print('\n\nFinding rentals on one-way streets:\n')
 
-    #TODO fill this in
-    for address in addresses:
-        pass
+        for address in _addresses:
 
-    uncompressed_street_names = None
-    return uncompressed_street_names
+            street_name = address.split(' ')[2:]  # Get everything after the address number
+            street_name = ' '.join(street_name)   
 
-def rentals_on_one_way_streets(_street_names, _one_way_streets, _test, _silent):
-    if _test and _silent:
-        print('Finding rentals on one-way streets:')
+            # print(street_name)     
+
+            for _one_way_street in _one_way_streets:
+                if street_name == _one_way_street:
+                    print(f'Found rental on one-way street: {address}')
     return
 
 
@@ -196,8 +244,8 @@ def main():
     street_abbreviations_df = street_abbreviations(street_abbreviations_file, True, True)
     one_way_streets = open_street_maps_find_one_way_streets(place_name, True, False)
     abbreviated_rental_addresses = zillow_search_html(city, zillow_search_url, True, True)
-    street_names = uncompressed_street_names(abbreviated_rental_addresses, street_abbreviations_df, True, True)
-    rentals_on_one_way_streets(street_names, one_way_streets, True, True)
+    addresses = uncompressed_street_names(abbreviated_rental_addresses, street_abbreviations_df, True, True)
+    rentals_on_one_way_streets(addresses, one_way_streets, True, True)
 
     return
 
