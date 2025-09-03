@@ -164,8 +164,6 @@ def street_abbreviations(_street_abbreviations_file, _test=False, _silent=False)
 
     return _street_abbreviations_df
 
-
-
 def uncompressed_street_names(addresses, _street_abbreviations_df, _test, _silent):
     # TODO: Implement uncompression logic
 
@@ -234,7 +232,6 @@ def rentals_on_one_way_streets(_addresses, _one_way_streets, _test, _silent):
                     print(search_query)
                     print('\n')
     return
-
 
 def main():
 
