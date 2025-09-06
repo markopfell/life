@@ -8,10 +8,28 @@ import copy
 def open_street_maps_find_one_lane_streets(_place_name, _test=False, _output_to_file=False):
 
     unique_one_lane_streets = None
+    
+    one_lane_streets_file_name = '_one_lane_streets.txt'
 
     if _test:
         print("Downloading street network...")
-        _place_name = 'Long Beach, CA, USA'
+        # _place_name = 'Long Beach, CA, USA'
+        
+        
+        place_name_parts = _place_name.split(',')
+
+        if ' ' in place_name_parts[0]:
+            city_parts = place_name_parts[0].split(' ')
+            place_name_parts[0] = '_'.join(city_parts)
+
+        # print(place_name_parts)
+
+        for i, place_name_part in enumerate(place_name_parts):
+            place_name_part = place_name_part.strip().lower()
+            place_name_parts[i] = place_name_part
+
+        one_lane_streets_file_name = '_'.join(place_name_parts) + one_lane_streets_file_name
+
 
         # Download the street network for the place
         G = ox.graph_from_place(_place_name, network_type='drive')
@@ -36,10 +54,14 @@ def open_street_maps_find_one_lane_streets(_place_name, _test=False, _output_to_
         for street in unique_one_lane_streets:
             print(street)
 
+        print('\n_output_to_file:', _output_to_file)
+        print('\n')
+
+
         if _output_to_file:
             # Write the list to a file in the current script directory
-            print(f"Writing one-lane streets to {output_path}")
-            output_path = os.path.join(os.path.dirname(__file__), 'one_lane_streets.txt')
+            print("Writing one-lane streets")
+            output_path = os.path.join(os.path.dirname(__file__), one_lane_streets_file_name)
             with open(output_path, 'w') as f:
                 for street in unique_one_lane_streets:
                     f.write(f"{street}\n")
@@ -247,7 +269,7 @@ def main():
     street_abbreviations_file = 'street_name_abbreviations_us.csv'
 
     street_abbreviations_df = street_abbreviations(street_abbreviations_file, True, True)
-    one_lane_streets = open_street_maps_find_one_lane_streets(place_name, True, False)
+    one_lane_streets = open_street_maps_find_one_lane_streets(place_name, True, True)
     abbreviated_rental_addresses = zillow_search_html(city, zillow_search_url, True, True)
     addresses = uncompressed_street_names(abbreviated_rental_addresses, street_abbreviations_df, True, True)
     rentals_on_one_lane_streets(addresses, one_lane_streets, True, True)
