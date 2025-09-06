@@ -13,6 +13,7 @@ def open_street_maps_find_one_lane_streets(_place_name, _test=False, _output_to_
 
     if _test:
         print("Downloading street network...")
+        print("Place name:", _place_name)
         # _place_name = 'Long Beach, CA, USA'
         
         
@@ -30,6 +31,7 @@ def open_street_maps_find_one_lane_streets(_place_name, _test=False, _output_to_
 
         one_lane_streets_file_name = '_'.join(place_name_parts) + one_lane_streets_file_name
 
+        print(_place_name)
 
         # Download the street network for the place
         G = ox.graph_from_place(_place_name, network_type='drive')
@@ -38,9 +40,9 @@ def open_street_maps_find_one_lane_streets(_place_name, _test=False, _output_to_
 
         # Iterate through edges and print one-lane streets
         for u, v, k, data in G.edges(keys=True, data=True):
-            if data.get('onelane'):
+            if data.get('oneway') or data.get('lanes') == '1':
                 street_name = data.get('name', 'Unnamed street')
-                # print(type(street_name))
+                print(type(street_name))
                 if isinstance(street_name, list):
                     for name in street_name:
                         one_lane_streets.append(name)
@@ -54,8 +56,8 @@ def open_street_maps_find_one_lane_streets(_place_name, _test=False, _output_to_
         for street in unique_one_lane_streets:
             print(street)
 
-        print('\n_output_to_file:', _output_to_file)
-        print('\n')
+        # print('\n_output_to_file:', _output_to_file)
+        # print('\n')
 
 
         if _output_to_file:
@@ -257,7 +259,10 @@ def rentals_on_one_lane_streets(_addresses, _one_lane_streets, _test, _silent):
 
 def main():
 
-    city = 'Long Beach'
+    # city = 'Long Beach'
+    # city = 'Seal Beach'
+    # city = 'Huntington Beach'
+    city = 'Rancho Palos Verdes'
     state = 'CA'
     country = 'USA'
 
