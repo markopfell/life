@@ -5,9 +5,9 @@ from bs4 import BeautifulSoup
 import pandas
 import copy
 
-def open_street_maps_find_one_way_streets(_place_name, _test=False, _output_to_file=False):
+def open_street_maps_find_one_lane_streets(_place_name, _test=False, _output_to_file=False):
 
-    unique_one_way_streets = None
+    unique_one_lane_streets = None
 
     if _test:
         print("Downloading street network...")
@@ -16,40 +16,40 @@ def open_street_maps_find_one_way_streets(_place_name, _test=False, _output_to_f
         # Download the street network for the place
         G = ox.graph_from_place(_place_name, network_type='drive')
 
-        one_way_streets = []
+        one_lane_streets = []
 
-        # Iterate through edges and print one-way streets
+        # Iterate through edges and print one-lane streets
         for u, v, k, data in G.edges(keys=True, data=True):
-            if data.get('oneway'):
+            if data.get('onelane'):
                 street_name = data.get('name', 'Unnamed street')
                 # print(type(street_name))
                 if isinstance(street_name, list):
                     for name in street_name:
-                        one_way_streets.append(name)
+                        one_lane_streets.append(name)
                 else:
-                    one_way_streets.append(street_name)
-                    print('oneway street: ', street_name)
+                    one_lane_streets.append(street_name)
+                    print('onelane street: ', street_name)
 
-        unique_one_way_streets = sorted(set(one_way_streets))
-        # print(f"Found {len(unique_one_way_streets)} unique one-way streets in {place_name}.")
+        unique_one_lane_streets = sorted(set(one_lane_streets))
+        # print(f"Found {len(unique_one_lane_streets)} unique one-lane streets in {place_name}.")
 
-        for street in unique_one_way_streets:
+        for street in unique_one_lane_streets:
             print(street)
 
         if _output_to_file:
             # Write the list to a file in the current script directory
-            print(f"Writing one-way streets to {output_path}")
-            output_path = os.path.join(os.path.dirname(__file__), 'one_way_streets.txt')
+            print(f"Writing one-lane streets to {output_path}")
+            output_path = os.path.join(os.path.dirname(__file__), 'one_lane_streets.txt')
             with open(output_path, 'w') as f:
-                for street in unique_one_way_streets:
+                for street in unique_one_lane_streets:
                     f.write(f"{street}\n")
     else:
-        print('Skipping one-way street extraction...')
+        print('Skipping one-lane street extraction...')
 
-    # for street in unique_one_way_streets:
+    # for street in unique_one_lane_streets:
     #     print(street)
 
-    return unique_one_way_streets
+    return unique_one_lane_streets
 
 def zillow_search_html(_city, _url, _test=False, _silent=True):
 
@@ -209,9 +209,9 @@ def uncompressed_street_names(addresses, _street_abbreviations_df, _test, _silen
 
     return uncompressed_streets
 
-def rentals_on_one_way_streets(_addresses, _one_way_streets, _test, _silent):
+def rentals_on_one_lane_streets(_addresses, _one_lane_streets, _test, _silent):
     if _test and _silent:
-        print('\n\nFinding rentals potentially on one-way streets:\n')
+        print('\n\nFinding rentals potentially on one-lane streets:\n')
 
         for address in _addresses:
 
@@ -220,9 +220,9 @@ def rentals_on_one_way_streets(_addresses, _one_way_streets, _test, _silent):
 
             # print(street_name)     
 
-            for _one_way_street in _one_way_streets:
-                if street_name == _one_way_street:
-                    print(f'Found rental on potentially a one-way street: {address}')
+            for _one_lane_street in _one_lane_streets:
+                if street_name == _one_lane_street:
+                    print(f'Found rental on potentially a one-lane street: {address}')
 
                     # https://www.google.com/maps/place/926+Locust+Ave,+Long+Beach,+CA+90813/
                     parts = '+'.join(address.split(' ') + ['Long', 'Beach', 'CA'])
@@ -247,10 +247,10 @@ def main():
     street_abbreviations_file = 'street_name_abbreviations_us.csv'
 
     street_abbreviations_df = street_abbreviations(street_abbreviations_file, True, True)
-    one_way_streets = open_street_maps_find_one_way_streets(place_name, True, False)
+    one_lane_streets = open_street_maps_find_one_lane_streets(place_name, True, False)
     abbreviated_rental_addresses = zillow_search_html(city, zillow_search_url, True, True)
     addresses = uncompressed_street_names(abbreviated_rental_addresses, street_abbreviations_df, True, True)
-    rentals_on_one_way_streets(addresses, one_way_streets, True, True)
+    rentals_on_one_lane_streets(addresses, one_lane_streets, True, True)
 
     return
 
