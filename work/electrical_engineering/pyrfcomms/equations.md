@@ -61,4 +61,4 @@ $L_\text{ implementation}$ is the loss of the receiver used to demodulate and de
 
 $L_\text{ link}$ are miscallenous losses like pointing error, depolarization, cross-polarization, radome losses, ... etc. 
 
-$L_\text{ fade}$ could be: rain/cloud, scintillation, or other dynamic link effects like interference.  Most links assume a clear skies 99% probability and do not take into account additional link margin for degradation.  Probabilities in the 3 or higher nines (99.9%, 99.99%, 99.999% ...) typically start with 3 dB of margin and then increase exponentially 
+$L_\text{ fade}$ could be: rain/cloud, scintillation, or other dynamic link effects like interference.  Most links assume a clear skies 99% probability and do not take into account additional link margin for degradation.  Probabilities in the 3 or higher nines (99.9%, 99.99%, 99.999% ...) typically start with 3 dB of margin and then increase exponentially.
