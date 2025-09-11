@@ -44,11 +44,11 @@ BER is the bit error rate
 <br>
 **Energy per bit noise density (Actual)**
 ```math
-\frac{E_b}{N_0}_{\text {Actual}} = \frac{C}{N_0} - 10\log_{10}(\text{modualated bit rate})
+\frac{E_b}{N_0}_{\text {Actual}} = \frac{C}{N_0} - 10\log_{10}(\text{modulated bit rate})
 ```
 **Energy per bit noise density (Actual)**
 ```math
-\text{link margin} = \frac{E_b}{N_0}_{\text {Actual}} -  
+\text{Link margin} = \frac{E_b}{N_0}_{\text {Actual}} -  
                      \frac{E_b}{N_0}_{\text {Desired}} +
                      G_\text{ coding} +
                      L_\text{ implementation} +
@@ -59,6 +59,6 @@ $G_\text{ coding}$ is the coding gain of the forward error correction
 
 $L_\text{ implementation}$ is the loss of the receiver used to demodulate and decode the waveform
 
-$L_\text{ link}$ are miscallenous losses like pointing error, depolarization, cross-polarization, radome losses, ... etc. 
+$L_\text{ link}$ are miscellaneous losses like pointing error, depolarization, cross-polarization, radome losses, ... etc. 
 
 $L_\text{ fade}$ could be: rain/cloud, scintillation, or other dynamic link effects like interference.  Most links assume a clear skies 99% probability and do not take into account additional link margin for degradation.  Probabilities in the 3 or higher nines (99.9%, 99.99%, 99.999% ...) typically start with 3 dB of margin and then increase exponentially.
