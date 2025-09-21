@@ -1,21 +1,41 @@
+**Error Vector Magntiude**
+```math
+SNR = PAPR - EVM_\text{ white noise} + 3
+```
+
+$SNR$ is the signal to noise ratio given in (dB)
+
+$EVM$ is the error vector magnitude.  The error vector being the error in both the amplitude and phase in a recieved symbol compared to the ideal symbol.
+
+
 **Noise Temperature**
 ```math
-T_{\text { Noise}}
+T_{\text { Noise}}(K) = T_\text{REF}(K)\left[10^\frac{\text{NF (dB)}}{10}-1\right]
 ```
+$T_\text{REF}$ is the reference temperature of the system.  Typically taken at the Earth's noise temperature of 290 K. 
+
+NF is the noise figure of the system.  The first term in the series expanion of a cascaded noise figure is the noise figure of the first element.  Typically a low noise amplifier (LNA).  Additional element noise contributions are reduced by the cascaded gain.
 
 **Effective Isotropic Radiated Power**
 ```math
 EIRP = P_T + G_T + L_\text{ output}
 ```
-$P_T$ is the power transmitted
-$L_\text{ output}$ is the loss
+$P_T$ is the output power of typically the final power amplfier in the cascade. 
+
+$L_\text{ output}$ is the loss post power amplifier, which could include cableing, duplexer, antenna ohmic, and other loss contribution elements in the chain.
 
 
 
 **Free Space Path Loss**
 ```math
-L_{\text { free space}} = 20\log_{10}\left(\frac{\lambda}{4\pi R}\right) 
+L_{\text { free space}} = 20\log_{10}\left(\frac{\frac{f}{c}}{4\pi R}\right) 
 ```
+
+$f$ is the frequency of the signal in Hz
+
+$c$ is the speed of light 
+
+$d$ is the distance between the two receiving antennas.  In the context of rockets and low earth orbit satellites d refers to the geometric slant range.
 
 **Friis Link Equation**
 ```math
@@ -46,7 +66,7 @@ BER is the bit error rate
 ```math
 \frac{E_b}{N_0}_{\text {Actual}} = \frac{C}{N_0} - 10\log_{10}(\text{modulated bit rate})
 ```
-**Energy per bit noise density (Actual)**
+**Link Margin**
 ```math
 \text{Link margin} = \frac{E_b}{N_0}_{\text {Actual}} -  
                      \frac{E_b}{N_0}_{\text {Desired}} +
