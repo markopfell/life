@@ -1,0 +1,4 @@
+MX master 3 rubber shell replacement by Rikkarlo on Thingiverse: https://www.thingiverse.com/thing:6822583
+
+Summary:
+The MXmaster 3 mouse from Logitec is by far my favorite mouse in terms of features and ergonomics. It's covered in a terrible rubber material that degrades between 1 and 4 years and becomes sticky and oily. Logitech does not sell spare parts, and adhesive skins after a while leak stickiness from the junctions (I tried them as well).So I decided to solve the problem by myself and model a new outer shell for my mouse.This solution is the best I've tested so far (and believe me, I tested many). Since I want to fight programmed obsolescence and contribute to a world with less electronic waste, I decided to share it for free. Feel free to print it and share some pictures of the results with me.
