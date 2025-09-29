@@ -7,6 +7,8 @@ $SNR$ is the signal to noise ratio given in (dB)
 
 $EVM$ is the error vector magnitude.  The error vector being the error in both the amplitude and phase in a recieved symbol compared to the ideal symbol.
 
+$PAPR$ is the peak average power ratio.  The 3 (dB) is for a single unmodulated tone (sine wave).  Binary phase shift keying (BPSK) theoretically has a PAPR of 0 dB similar to a square wave, and QPSK has around 1.7 dB.  Multi carrier scenarios like orthogonal frequency domain access (OFDMA) have an order of magnitude PAPR around 12 dB since the average energy and symbol varies so widly.
+
 
 **Noise Temperature**
 ```math
