@@ -58,10 +58,11 @@
 Standards & DVB-S2, CCSDS, IRIG, FCC, ITU\\
 RF Tools & VNA, SDR, GNU Radio, VSA\\%, Antenna Hats\\
 %Groundstation Network & KSAT Lite\\
-General Software Tools & Python, Git*, Linux, Bash\\%, Excel (Wizard)\\
+General Software Tools & Python, Git*, Linux, Bash, AWS EC2\\%, Excel (Wizard)\\
 Python Libraries & NumPy, Matplotlib, Scapy\\%,, Skimage SciPy\\
-Networking & Ethernet, UDP, TCP/IP, iPerf, Wireshark, Ethernet\\ %Blacksky, Leostella public knowledge 
-Cloud & AWS EC2 \& S3\\ %Blacksky, Leostella public knowledge 
+Networking & Ethernet, UDP, TCP, IP, Wireshark, iPerf\\ %Blacksky, Leostella public knowledge 
+%Cloud & AWS EC2 \& S3\\ %Blacksky, Leostella public knowledge 
+FPGA & Xilinx Zynq, PYNQ, Vivado\\
 Volcano Ascents & Mount Rainier, Mount Baker, Mount Adams \\%Stawamus Chief (Squamish Buttress face), 5 Gallon Buckets \\
 %Significant Descents & Camp Muir (Winter), Skykomish (Class III+) \\ 
 \\
@@ -81,7 +82,7 @@ Volcano Ascents & Mount Rainier, Mount Baker, Mount Adams \\%Stawamus Chief (Squ
 %company_size=1,000
 &
 \vspace{-0.15 cm}
-Developing real time rocket telemetry system for first flight safety.
+Developing real time rocket telemetry systems for first flight safety.
 \newline
 %Developed and tested Ka-band payload phased array system antenna  test matrix in a spacecraft sized anechoic chamber.
 %\newline
@@ -103,7 +104,7 @@ Developing real time rocket telemetry system for first flight safety.
 &
 \vspace{-0.15 cm}
 %Project Kuiper: Developing Ka-band payload phased array system test infrastructure analyzing complex wireless links for mass production.
-Built, and ran bare metal UDP/IP throughput experiments on a FPGA.  Developed a Python driver capturing raw telemetry frames of RSSI on Gateway LNBs, and coupled RF transmit power from BUCs.  The Python driver could reboot individual gateway hardware and reverse faults. 
+Built, and ran UDP/IP throughput experiments on a Xilinx Zynq FPGA.  Developed a Python driver capturing raw telemetry frames of RSSI on Gateway LNBs, and coupled RF transmit power from BUCs.  The Python driver could reboot individual gateway hardware and reverse faults. 
 \newline
 %Developed and tested Ka-band payload phased array system antenna  test matrix in a spacecraft sized anechoic chamber.
 %\newline
@@ -147,7 +148,7 @@ Lead NGSO imaging satellite constellation ITU, and FCC 312 Schedule S regulatory
 %total yearly compensation:$115k + 10k bonus + 0k bonus,, Senior RF Engineer, company_size=40
 &
 \vspace{-0.15 cm}
-Created RF architecture diagrams, link budgets, test plans, and ran hands-on troubleshooting. Collaborated with customers and suppliers to design, manufacture, test, launch, and operate X (payload), S (TT\&C), GPS, and UHF-band space-based software defined radios linked to ground stations enabled by the AWS Ground Station service and the KSAT Lite ground station network.
+Created RF architecture diagrams, link budgets, test plans, and ran hands-on troubleshooting. Collaborated with customers and suppliers to design, manufacture, test, launch, and operate X (payload), S (TT\&C), GPS, and UHF-band space-based software defined radios linked to ground stations enabled by AWS and the KSAT Lite ground station network.
 %\newline
 %\newline
 %Managed cost, schedule, risk, regulatory compliance, and SWaP to stand up Low-Earth orbit small satellite constellations i%ncluding BlackSky, Loft Orbital, and NorthStar Earth \& Space.
@@ -175,9 +176,9 @@ Developed and executed over-the-air combined OSI application, transport, network
 %\newline
 %\newline
 %Took on project management duties helping guide and educate team members towards a unified view of software processes, programming languages, and development tools, across Agile and Waterfall methodologies.
-\newline
-\newline
-Wrote phased array antenna cross-polarization optimization algorithm in Python and integrated it with production level test codebase along with documentation, theoretical and actual response data.
+%\newline
+%\newline
+%Wrote phased array antenna cross-polarization optimization algorithm in Python and integrated it with production level test codebase along with documentation, theoretical and actual response data.
 \\
 \\
 \end{tabularx}
@@ -197,7 +198,7 @@ Wrote phased array antenna cross-polarization optimization algorithm in Python a
 \begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
 \gray Job Title & \textbf{Senior RF Systems Engineer}\\
 \gray Employer & \textbf{Maxar} \hfill Mountain View, CA\\
-\gray Period & \textbf{March 2015 -- January 2018}\\
+\gray Period & \textbf{September 2013 -- January 2018}\\
 %total yearly compensation:$82k + 0k bonus + 0k stock, Senior Systems Engineer, company_size=4000
 &
 \vspace{-0.15 cm}
@@ -208,25 +209,26 @@ Wrote phased array antenna cross-polarization optimization algorithm in Python a
 %\newline
 %\newline
 Wrote specifications, triaged vendors, reviewed test data collateral, and directed the installation, unit level and system level tests of the following passive and active RF units: diplexer, waveguide, directional coupler, band pass filter, low noise amplifier, downconverter, high power load, circulator, coaxial cable, master reference oscillator, and synthesizer.
-\\
-\\
+\newline
+\newline
+Developed Python analysis tool from scratch to model complex amplitude and time delay of 10,000+ RF units for ground-based beam-forming.
 \end{tabularx}
 
-\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
-\gray Job Title & \textbf{Associate -> RF Systems Engineer}\\
-\gray Employer & \textbf{Maxar} \hfill Mountain View, CA\\
-\gray Period & \textbf{September 2013 -- March 2015}\\
-%total yearly compensation:$77k + 0k bonus + 0k stock, Associate Systems Engineer, company_size=3000
-%total yearly compensation:$68k + 0k bonus + 0k stock, Systems Engineer, company_size=3000
-&
-\vspace{-0.15 cm}
-Developed Python analysis tool from scratch to model complex amplitude and time delay of 10,000+ RF units for ground-based beam-forming.
-%\newline
-%\newline
-%Awarded by the CEO for saving \$0.25 Million and 3 weeks of production schedule with Python tool simulations.
-\\
-\\
-\end{tabularx}
+% \begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+% \gray Job Title & \textbf{Associate -> RF Systems Engineer}\\
+% \gray Employer & \textbf{Maxar} \hfill Mountain View, CA\\
+% \gray Period & \textbf{September 2013 -- March 2015}\\
+% %total yearly compensation:$77k + 0k bonus + 0k stock, Associate Systems Engineer, company_size=3000
+% %total yearly compensation:$68k + 0k bonus + 0k stock, Systems Engineer, company_size=3000
+% &
+% \vspace{-0.15 cm}
+% Developed Python analysis tool from scratch to model complex amplitude and time delay of 10,000+ RF units for ground-based beam-forming.
+% %\newline
+% %\newline
+% %Awarded by the CEO for saving \$0.25 Million and 3 weeks of production schedule with Python tool simulations.
+% \\
+% \\
+% \end{tabularx}
 
 %\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
 %\gray Job Title & \textbf{Associate RF Systems Engineer}\\
@@ -244,15 +246,30 @@ Developed Python analysis tool from scratch to model complex amplitude and time 
 %\\
 %\end{tabularx}
 
-%EDUCATION
-\section{Education}
+%EDUCATION & CERTIFICATIONS
+\section{Education \& Certifications}
 \begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
 \gray Degree & \textbf{Bachelor of Science in Electrical Engineering}\\
 %\gray Focus & \textbf{Applied Electromagnetics}\\
 \gray University & \textbf{University of California, Davis} \\
-\gray Period & \textbf{June 2009 -- June 2012}\\
+\gray Period & \textbf{2009 -- 2012}\\
+\newline
 \end{tabularx}
 
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+\gray Certification & \textbf{Network Technician}\\
+%\gray Focus & \textbf{Applied Electromagnetics}\\
+\gray Organization & \textbf{Cisco} \\
+\gray Period & \textbf{2024}\\
+\newline
+\end{tabularx}
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+\gray Certification & \textbf{Apprentice Alpine Mountain Guide}\\
+%\gray Focus & \textbf{Applied Electromagnetics}\\
+\gray Organization & \textbf{American Mountain Guide Association} \\
+\gray Period & \textbf{2023}\\
+\end{tabularx}
 
 \end{center}
 \end{document}
