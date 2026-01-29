@@ -55,14 +55,14 @@
 %SKILLS & QUALIFICATIONS
 \section{Skills and Exposure}
 \begin{tabular}{ @{} >{\bfseries}l @{\hspace{6ex}} l }
-Standards & DVB-S2, CCSDS, IRIG, FCC, ITU\\
-RF Tools & VNA, SDR, GNU Radio, VSA\\%, Antenna Hats\\
+Standards & DVB-S2, CCSDS, FCC, IRIG, ITU\\
+RF Tools & SDR, VNA, GNU Radio, VSA\\%, Antenna Hats\\
 %Groundstation Network & KSAT Lite\\
 General Software Tools & Python, Git*, Linux, Bash, AWS EC2\\%, Excel (Wizard)\\
 Python Libraries & NumPy, Matplotlib, Scapy\\%,, Skimage SciPy\\
-Networking & Ethernet, UDP, TCP, IP, Wireshark, iPerf\\ %Blacksky, Leostella public knowledge 
+Networking & Ethernet, UDP/IP, Wireshark, iPerf\\ %Blacksky, Leostella public knowledge 
 %Cloud & AWS EC2 \& S3\\ %Blacksky, Leostella public knowledge 
-FPGA & Xilinx Zynq, PYNQ, Vivado\\
+FPGA & Xilinx, PYNQ, Vivado\\
 Volcano Ascents & Mount Rainier, Mount Baker, Mount Adams \\%Stawamus Chief (Squamish Buttress face), 5 Gallon Buckets \\
 %Significant Descents & Camp Muir (Winter), Skykomish (Class III+) \\ 
 \\
@@ -77,14 +77,13 @@ Volcano Ascents & Mount Rainier, Mount Baker, Mount Adams \\%Stawamus Chief (Squ
 \gray Job Title & \textbf{Senior RF and Telemetry Engineer}\\
 \gray Employer & \textbf{Relativity} \hfill Long Beach, CA\\
 \gray Period & \textbf{August 2025 -- Present}\\
-%1,115 units of AMZ = $188/share on the New York Stock exchange, vesting: Year 1 = 5%, Year 2 = 15%, Year 2.5 = 20%, Year 3 = 20%, Year 3.5 = 20%, Year 4 = 20%.
+%??,??? units of REL = $???/share private equity vesting: Year 1 = 5%, Year 2 = 15%, Year 2.5 = 20%, Year 3 = 20%, Year 3.5 = 20%, Year 4 = 20%.
 %base $185,000 
 %company_size=1,000
 &
 \vspace{-0.15 cm}
-Developing real time rocket telemetry systems for first flight safety.
+Architected, developed, and programmed RF HITL rack (hardware-in-the-loop) testing S-band telemetry bit and packet error rate of the mission data chain from vehicle UDP/IP multicast network traffic to radiated QPSK waveform received by the ground FPGA-based SDR.
 \newline
-%Developed and tested Ka-band payload phased array system antenna  test matrix in a spacecraft sized anechoic chamber.
 %\newline
 %\newline
 \end{tabularx}
@@ -93,7 +92,7 @@ Developing real time rocket telemetry systems for first flight safety.
 \begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
 \gray Job Title & \textbf{RF Communications System Engineer}\\
 \gray Employer & \textbf{Amazon: Kuiper} \hfill Redmond, WA\\
-\gray Period & \textbf{July 2024 -- Present}\\
+\gray Period & \textbf{July 2024 -- August 2025}\\
 %California equivalent = $300,000
 %Washington total yearly compensation: $280,00
 %Year 1 sign on payment = $99,600 broken out and paid monthly
@@ -103,10 +102,12 @@ Developing real time rocket telemetry systems for first flight safety.
 %company_size=1,600,000
 &
 \vspace{-0.15 cm}
-%Project Kuiper: Developing Ka-band payload phased array system test infrastructure analyzing complex wireless links for mass production.
-Built, and ran UDP/IP throughput experiments on a Xilinx Zynq FPGA.  Developed a Python driver capturing raw telemetry frames of RSSI on Gateway LNBs, and coupled RF transmit power from BUCs.  The Python driver could reboot individual gateway hardware and reverse faults. 
+%Developed Ka-band payload phased array system test infrastructure analyzing complex wireless links for mass production.
+Developed and ran over the air Ka-band MIMO phased array system test UDP/IP throughput experiments on Xilinx Versal FPGAs.  
+%Developed a Python driver capturing raw telemetry frames of RSSI on Gateway LNBs, and coupled RF transmit power from BUCs.  
+%The Python driver could reboot individual gateway hardware and reverse faults. 
 \newline
-%Developed and tested Ka-band payload phased array system antenna  test matrix in a spacecraft sized anechoic chamber.
+%Developed and tested Ka-band MIMO phased array antenna system test matrix in a spacecraft sized anechoic chamber.
 %\newline
 %\newline
 \end{tabularx}
@@ -119,21 +120,22 @@ Built, and ran UDP/IP throughput experiments on a Xilinx Zynq FPGA.  Developed a
 %base $175,000   
 &
 \vspace{-0.15 cm}
-Created, evaluated, and built space-to-ground digital communications payload (gigabit class) for high data rate visible and thermal sensors. Developed the mission data chain from modulated waveform to frames, packets, and connections. Analyzed and tested with: engineering model radios, GNU radio, technical deep dives into CCSDS and DVB-S2 standards, and Python code for the processing pipeline.
-\newline
-\newline
-Lead NGSO imaging satellite constellation ITU, and FCC 312 Schedule S regulatory filings.  Ran RF analysis support efforts with Python scripts, and ITU Spacecap.  Collaborated with orbital dynamics expert, and mechanical engineers to decompose legal wording into requirements for satellite architecture and material choices ensuring proper post mission disposal. 
-\newline
+%Created, evaluated, and built space-to-ground digital communications payload (gigabit class) for high data rate visible and thermal sensors. Developed the mission data chain from modulated waveform to frames, packets, and connections. Analyzed and tested with: software defined packet radios, GNU radio, technical deep dives into CCSDS and DVB-S2 standards, and Python code for the processing pipeline.
 %\newline
+%\newline
+Lead NGSO imaging satellite constellation ITU, and FCC 312 Schedule S regulatory filings.  Ran RF analysis efforts with Python scripts, and ITU Spacecap.  Collaborated with orbital dynamics, and mechanical design experts to decompose legal wording into requirements for satellite architecture and material choices ensuring proper post mission disposal. 
+\newline
+\newline
+%Created a weekly multi-system schedule for a years worth of work to get to launch.  This work plan burned down realistic technical risk of hardware and software through test and integration opportunities ultimately yielding a successful first RF contact with the space vehicle.
 %Procured, set up, coded, documented, and maintained HITL (hardware-in-the-loop) testbed for S-band telemetry \& command megabit speed links. Hardware included an EDU space transceiver, ground COTS SDR, open-source spectrum analyzer, couplers, attenuators, and coax.  Defined and tested first contact ConOps. Architected and set up lab to cloud VPN network with a hardware firewall.  
 %\newline
 %\newline
 %\newline
 %\newline
-%Continuously building consensus with the founders (CTO, CEO, and CPO) on which space and ground communication business partnerships to pursue. Collaboration on product (satellite imagery) level vision, creation of a 10 year communications technology roadmap, and month-to-month schedule to break down a work plan to get launch while burning down realistic technical risks. 
+%Continuously built consensus with the founders (CTO, CEO, and CPO) on which space and ground communication business partnerships to pursue. Collaborated on product (satellite imagery) level vision.  Created a 10 year communications technology roadmap.  
 %\newline
 %\newline
-%Created a realistic and actionable plan to increase satellite constellation average payload data throughput by 42\% yielding a 14\% increase in capacity (directly correlated with revenue).  Validated the plan with large scale year-in-the-life Python link budget modeling and systems engineering showing minimal schedule delay, and technical risk.
+Created a realistic and actionable plan to increase satellite constellation average payload data throughput by 42\% yielding a 14\% increase in capacity (directly correlated with revenue).  Validated the plan with large scale year-in-the-life Python link budget modeling and systems engineering showing minimal schedule delay, and technical risk.
 %\newline
 %\newline
 %Joined just after Seed funding as the 12th employee.
@@ -253,7 +255,7 @@ Developed Python analysis tool from scratch to model complex amplitude and time 
 %\gray Focus & \textbf{Applied Electromagnetics}\\
 \gray University & \textbf{University of California, Davis} \\
 \gray Period & \textbf{2009 -- 2012}\\
-\newline
+\\
 \end{tabularx}
 
 \begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
@@ -261,7 +263,7 @@ Developed Python analysis tool from scratch to model complex amplitude and time 
 %\gray Focus & \textbf{Applied Electromagnetics}\\
 \gray Organization & \textbf{Cisco} \\
 \gray Period & \textbf{2024}\\
-\newline
+\\
 \end{tabularx}
 
 \begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
@@ -269,6 +271,7 @@ Developed Python analysis tool from scratch to model complex amplitude and time 
 %\gray Focus & \textbf{Applied Electromagnetics}\\
 \gray Organization & \textbf{American Mountain Guide Association} \\
 \gray Period & \textbf{2023}\\
+\\
 \end{tabularx}
 
 \end{center}
