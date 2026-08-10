@@ -1,0 +1,256 @@
+<mxfile host="65bd71144e">
+    <diagram name="Block Diagram" id="block-diagram-1">
+        <mxGraphModel dx="1819" dy="1113" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1900" pageHeight="1050" background="#000000" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="labNetworkLabel" value="To Lab&lt;br&gt;Network" style="text;html=1;align=center;verticalAlign=middle;fontColor=#FFFFFF;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="130" y="20" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="ethSwitch" value="Ethernet&lt;br&gt;Switch" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=16;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="280" width="330" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="linuxComputer" value="Medium power&lt;br&gt;Linux Computer" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=16;" parent="1" vertex="1">
+                    <mxGeometry x="510" y="255" width="190" height="195" as="geometry"/>
+                </mxCell>
+                <mxCell id="tsa1" value="Tiny&lt;br&gt;Spectrum&lt;br&gt;Analyzer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="885" y="255" width="130" height="95" as="geometry"/>
+                </mxCell>
+                <mxCell id="tsa2" value="Tiny&lt;br&gt;Spectrum&lt;br&gt;Analyzer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="885" y="355" width="130" height="95" as="geometry"/>
+                </mxCell>
+                <mxCell id="usbRs422" value="USB&lt;br&gt;to&lt;br&gt;RS422&lt;br&gt;Adapter" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="355" y="500" width="125" height="95" as="geometry"/>
+                </mxCell>
+                <mxCell id="sband" value="S-band Transceiver" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=16;arcSize=8;" parent="1" vertex="1">
+                    <mxGeometry x="510" y="595" width="345" height="295" as="geometry"/>
+                </mxCell>
+                <mxCell id="gige" value="GigE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=14;arcSize=20;" parent="1" vertex="1">
+                    <mxGeometry x="525" y="680" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="rs422" value="RS422" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=14;arcSize=20;" parent="1" vertex="1">
+                    <mxGeometry x="525" y="775" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="sbandTx1" value="Tx 1" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="805" y="655" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="sbandTx2" value="Tx 2" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="805" y="715" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="sbandRx1" value="Rx 1" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="805" y="770" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="sbandRx2" value="Rx 2" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="805" y="828" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="coupler20a" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;20 dB&lt;br&gt;Coupler" style="triangle;whiteSpace=wrap;html=1;direction=north;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="890" y="635" width="120" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="atten1" value="40 dB&lt;br&gt;Attenuator" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="1125" y="652" width="115" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="atten2" value="40 dB&lt;br&gt;Attenuator" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="1125" y="712" width="115" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="coupler20b" value="20 dB&lt;br&gt;Coupler&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="triangle;whiteSpace=wrap;html=1;direction=south;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="1285" y="805" width="115" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="usrp" value="USRP B210" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=16;arcSize=8;" parent="1" vertex="1">
+                    <mxGeometry x="1410" y="595" width="345" height="295" as="geometry"/>
+                </mxCell>
+                <mxCell id="usrpRx1" value="Rx 1" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="1420" y="655" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="usrpRx2" value="Rx 2" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="1420" y="715" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="usrpTx1" value="Tx 1" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="1420" y="770" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="usrpTx2" value="Tx 2" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="1420" y="828" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#FFFFFF;rounded=0;curved=0;strokeWidth=4;startArrow=classic;startFill=1;" edge="1" parent="1" source="usrpUsb3" target="linuxComputer">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1787" y="750"/>
+                            <mxPoint x="1787" y="210"/>
+                            <mxPoint x="605" y="210"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="usrpUsb3" value="USB3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=14;arcSize=20;" parent="1" vertex="1">
+                    <mxGeometry x="1645" y="725" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_labnet" style="edgeStyle=none;html=1;endArrow=open;endFill=1;dashed=1;strokeColor=#FFFFFF;strokeWidth=4;" parent="1" source="ethSwitch" target="labNetworkLabel" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="190" y="280"/>
+                            <mxPoint x="190" y="60"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_switch_linux" value="" style="edgeStyle=none;html=1;startArrow=open;startFill=1;endArrow=open;endFill=1;strokeColor=#FFFFFF;entryX=0.016;entryY=0.391;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=4;" parent="1" source="ethSwitch" target="linuxComputer" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_linux_tsa1" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;USB 3 cable&lt;/font&gt;" style="edgeStyle=none;html=1;endArrow=open;endFill=1;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=14;entryX=1;entryY=0.25;entryDx=0;entryDy=0;strokeWidth=4;" parent="1" source="tsa1" target="linuxComputer" edge="1">
+                    <mxGeometry x="0.0039" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_linux_tsa2" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;USB 3 cable&lt;/font&gt;" style="edgeStyle=none;html=1;endArrow=open;endFill=1;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=14;entryX=1;entryY=0.75;entryDx=0;entryDy=0;strokeWidth=4;" parent="1" source="tsa2" target="linuxComputer" edge="1">
+                    <mxGeometry x="-0.0028" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_usrp_tsa1" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;endFill=1;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=14;exitX=1;exitY=0.5;entryX=1;entryY=0.5;rounded=0;shape=link;entryDx=0;entryDy=0;exitDx=0;exitDy=0;" parent="1" source="coupler20b" target="tsa1" edge="1">
+                    <mxGeometry x="0.0009" relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1342" y="960"/>
+                            <mxPoint x="1825" y="960"/>
+                            <mxPoint x="1825" y="303"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_linux_usbrs422" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=none;strokeColor=#FFFFFF;strokeWidth=4;startArrow=classic;startFill=1;endFill=0;" parent="1" source="linuxComputer" target="usbRs422" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="415" y="365"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_ethswitch_usbrs422" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=classic;endFill=1;strokeColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0;entryY=0.5;exitDx=0;exitDy=0;startArrow=classic;startFill=1;strokeWidth=4;" parent="1" source="ethSwitch" target="usbRs422" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="185" y="548"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_ethcable" value="Ethernet&lt;br&gt;Cable" style="text;html=1;fontColor=#FFFFFF;fontSize=13;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="130" y="555" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_usbrs422_rs422" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=classic;endFill=1;strokeColor=#FFFFFF;strokeWidth=5;startArrow=none;startFill=0;" parent="1" source="usbRs422" target="rs422" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="417" y="800"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_rs422cable" value="RS422&lt;br&gt;Cable" style="text;html=1;fontColor=#FFFFFF;fontSize=13;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="326" y="622" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_gige_tx1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;endFill=1;strokeColor=#FFFFFF;rounded=0;curved=0;" parent="1" source="gige" target="sbandTx1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="710" y="700"/>
+                            <mxPoint x="710" y="680"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_gige_tx2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;endFill=1;strokeColor=#FFFFFF;rounded=0;curved=0;" parent="1" source="gige" target="sbandTx2" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="710" y="700"/>
+                            <mxPoint x="710" y="740"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_gige_rx_dashed" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;endFill=1;dashed=1;strokeColor=#FFFFFF;rounded=0;curved=0;" parent="1" source="sbandRx1" target="gige" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="710" y="795"/>
+                            <mxPoint x="710" y="700"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_rs422_rx2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;endFill=1;dashed=1;strokeColor=#FFFFFF;rounded=0;curved=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" parent="1" source="sbandRx2" target="rs422" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="710" y="853"/>
+                            <mxPoint x="710" y="813"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_tx1_coupler" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#FFFFFF;shape=link;" parent="1" source="sbandTx1" target="coupler20a" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_coupler_tsa2" value="" style="edgeStyle=none;html=1;endArrow=open;endFill=1;strokeColor=#FFFFFF;shape=link;" parent="1" source="coupler20a" target="tsa2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="lbl_coax" value="Coax" style="text;html=1;fontColor=#FFFFFF;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="1030" y="620" width="60" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_coupler_atten1" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#FFFFFF;shape=link;" parent="1" source="coupler20a" target="atten1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_atten1_usrprx1" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#FFFFFF;shape=link;" parent="1" source="atten1" target="usrpRx1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_tx2_atten2" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#FFFFFF;shape=link;" parent="1" source="sbandTx2" target="atten2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_atten2_usrprx2" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#FFFFFF;shape=link;" parent="1" source="atten2" target="usrpRx2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_usrptx1_sbandrx1" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#FFFFFF;shape=link;" parent="1" source="sbandRx1" target="usrpTx1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_sbandrx2_coupler" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#FFFFFF;shape=link;" parent="1" source="sbandRx2" target="coupler20b" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_coupler_usrptx2" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#FFFFFF;" parent="1" source="coupler20b" target="usrpTx2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Ethernet&lt;br&gt;Cable" style="text;html=1;fontColor=#FFFFFF;fontSize=13;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="385" y="255" width="90" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;endFill=1;dashed=1;strokeColor=#FFFFFF;rounded=0;curved=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="sbandRx1" target="rs422">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="800" y="800" as="sourcePoint"/>
+                        <mxPoint x="635" y="715" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="710" y="795"/>
+                            <mxPoint x="710" y="813"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="6" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;endFill=1;strokeColor=#FFFFFF;rounded=0;curved=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="rs422" target="sbandTx2">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="635" y="715" as="sourcePoint"/>
+                        <mxPoint x="815" y="750" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="710" y="787"/>
+                            <mxPoint x="710" y="740"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="7" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=open;endFill=1;dashed=1;strokeColor=#FFFFFF;rounded=0;curved=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="805" y="701.98" as="sourcePoint"/>
+                        <mxPoint x="625" y="719.98" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="710" y="701.98"/>
+                            <mxPoint x="710" y="719.98"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="8" style="edgeStyle=none;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="tsa2" target="tsa2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=classic;strokeColor=#FFFFFF;strokeWidth=4;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=classic;startFill=1;endFill=1;" edge="1" parent="1" source="ethSwitch" target="gige">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="103" y="705"/>
+                        </Array>
+                        <mxPoint x="520" y="375" as="sourcePoint"/>
+                        <mxPoint x="425" y="510" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="15" value="Ethernet&lt;br&gt;Cable" style="text;html=1;fontColor=#FFFFFF;fontSize=13;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="91" y="722.5" width="90" height="40" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
