@@ -30,7 +30,7 @@ $L_\text{ output}$ is the loss post power amplifier, which could include cablein
 
 **Free Space Path Loss**
 ```math
-L_{\text { free space}} = 20\log_{10}\left(\frac{\frac{f}{c}}{4\pi R}\right) 
+L_{\text { free space}} = 20\log_{10}\left(\frac{\frac{f}{c}}{4\pi d}\right) 
 ```
 
 $f$ is the frequency of the signal in Hz
