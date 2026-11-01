@@ -62,7 +62,7 @@ General Software Tools & Python, Git*, Linux, Bash, Claude, AWS EC2\\%, Excel (W
 Python Libraries & NumPy, Matplotlib, Scapy\\%,, Skimage SciPy\\
 Networking & Ethernet, UDP/IP, Wireshark, iPerf\\ %Blacksky, Leostella public knowledge 
 %Cloud & AWS EC2 \& S3\\ %Blacksky, Leostella public knowledge 
-FPGA & AMD, Zynq, RFSoC, Ultrascale, Vivado\\
+FPGA & AMD, Zynq Ultrascale \& RFSoC, Vivado\\
 Significant Volcano Ascents &  Rainier, Baker, Adams\\%Stawamus Chief (Squamish Buttress face), 5 Gallon Buckets \\
 %Significant Descents & Camp Muir (Winter), Skykomish (Class III+) \\ 
 \\
@@ -82,13 +82,16 @@ Significant Volcano Ascents &  Rainier, Baker, Adams\\%Stawamus Chief (Squamish 
 %company_size=1,000
 &
 \vspace{-0.15 cm}
-Researched, wrote, and tested bit accurate LDPC encoder and decoder algorithms against simulation outputs proving hardware functionality.  
+Researched, wrote, and tested bit accurate LDPC error correction (FEC) encoder and decoder algorithms against FPGA simulation outputs proving out hardware functionality. Reproduced the IRIG standard frequency pulse algorithm for waveform shaping.  Simulated the corresponding finite impulse response filter built from a fixed-point conversion of the coefficients.  Checked the FIR filter’s response against the downstream DAC’s digital range, and rescaled to avoid clipping.   
 \newline
 \newline
-Networked, built, programmed, and tested RF HITL rack testing S-band telemetry-over-IP bit error rate from vehicle UDP/IP multicast network traffic to radiated PSK waveform received by the ground receiver.  Compared PTP versus NTP real world accuracies against telemetry timebase requirements.  Distributed stratum 1 GPS time via NTP.
+%Networked, built, programmed, and tested RF HITL rack testing S-band telemetry-over-IP bit error rate from vehicle UDP/IP multicast network traffic to radiated PSK waveform received by the ground receiver.
+%Compared PTP versus NTP real world accuracies against telemetry timebase requirements.  Distributed stratum 1 GPS time via NTP.
 %Wrote, and tested high-level code generating HDL for an AMD FPGA-based pseudo-randomization algorithm proving basic spectral compliance.   
-%Hands-on debugged a Xilinx FPGA-based software defined transmitter's digital modulator, frame synchronizer, and LDPC forward error correction encoder.  Corrected, committed, and re-built high-level code generating HDL reversing a subtle endianness swap, and errors in synchronization word construction.  Flashed bitstreams onto PCBAs, and validated system bit accuracy, and frame lock.
-%Fixed major errors in high level HDL, and flashed working bitstreams onto PCBAs. 
+Debugged an AMD FPGA-based transmitter's: digital modulator, frame synchronizer, LDPC encoder, and dual channel space-time coder.
+%Corrected, committed, and re-built high-level code generating HDL.
+%Corrected, committed, and re-built high-level code generating HDL reversing a subtle endianness swap, and fixing errors in synchronization word construction.
+%Flashed bitstreams onto PCBAs, validated FEC frame decoding, protocol layer frame lock, and system bit accuracy.
 \newline
 %\newline
 \end{tabularx}
@@ -126,10 +129,10 @@ Implemented and ran, over the air Ka-band MIMO phased array system test UDP/IP t
 %base $175,000   
 &
 \vspace{-0.15 cm}
-Built a large scale year-in-the-life Python link budget modeling satellite constellation average payload data throughput.  
+%Built a large scale year-in-the-life Python link budget modeling satellite constellation average payload data throughput.  
 %, and Python code for the processing pipeline.
-\newline
-\newline
+%\newline
+%\newline
 %Lead NGSO imaging satellite constellation ITU, and FCC 312 Schedule S regulatory filings.  Ran RF analysis efforts with Python scripts, and ITU Spacecap.  
 %Collaborated with orbital dynamics, and mechanical design experts to decompose legal wording into requirements for satellite architecture and material choices ensuring proper post mission disposal. 
 %\newline
